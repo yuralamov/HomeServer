@@ -1,7 +1,7 @@
 Стандартная установка ubuntu server загрузочной флешки (rufus GPT-UEFI) в режиме efi
 Создание новой таблицы GPT.
 Разбиение системного диска:
-128M           efi    pimary             boot
+128M           efi    primary             boot
 512            ext2   primary   /boot
 10G            swap   primary
 остальное - под lvm
