@@ -1,0 +1,51 @@
+===============================
+Установка transmission-daemon
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install transmission-daemon -y
+sudo service transmission-daemon stop && sudo service transmission-daemon status
+
+sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.bak
+sudo nano /etc/transmission-daemon/settings.json
+
+"bind-address-ipv4": "192.168.0.6" # Адрес компьютера
+"download-dir": "/mnt/usbhdd/media/torrents" # Дирректория с завершенными загрузками
+"incomplete-dir": "/mnt/usbhdd/media/torrents/incomplete" # Дирректория с незавершенными
+"incomplete-dir-enabled": true                             # загрузками
+"message-level": 2 # Уровень логирования (0 - отсутствие записей в логи)
+"rpc-enabled": true # Доступ через Web
+"rpc-bind-address": "192.168.0.6" # На какой идет Web
+"rpc-authentication-required": true # Парольный Web
+"rpc-username": "transmission" # Имя для доступа
+"rpc-password": ".hfkfvjd" # Пароль доступа
+"rpc-port": 9091 # Порт вещания Web
+"rpc-whitelist-enabled": true # Будет доступен
+"rpc-whitelist": "127.0.0.1,192.168.0.*" # Для кого доступен
+"watch-dir": "/mnt/usbhdd/media/torrents/watch", # Дирректория на наличие торрент-файла
+"watch-dir-enabled": true    # Опрос на наличие торрент-файла
+Все строки заканчиваются запятой, кроме последней
+
+sudo mkdir -p /mnt/usbhdd/media/torrents/{incomplete,watch}
+sudo chmod -R 0777 /mnt/usbhdd/media/torrents/
+sudo chown -R debian-transmission:debian-transmission /mnt/usbhdd/media/torrents/
+
+sudo invoke-rc.d transmission-daemon reload
+sudo service transmission-daemon restart && sudo service transmission-daemon status
+
+
+
+sudo nano /etc/ufw/applications.d/transmission-demon
+
+[Transmission]
+title=Cross-platform BitTorrent client 
+description=Transmission is an open source, volunteer-based project
+ports=9091/tcp
+
+sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
+
+sudo service transmission-daemon start
+===================================
+
+http://192.168.0.6:9091
+
+sudo cp -p /etc/transmission-daemon/settings.json /srv/backup/

@@ -1,0 +1,57 @@
+=====================================
+Установка Медиасервера Gerbera
+
+sudo add-apt-repository ppa:stephenczetty/gerbera-updates -y
+sudo apt-get update && sudo apt install gerbera exif exiv2 ffmpeg ffmpegthumbnailer libdvd-pkg libdvdread4 mediainfo magic -y
+sudo dpkg-reconfigure libdvd-pkg
+
+sudo systemctl stop gerbera && sudo systemctl status gerbera
+
+sudo cp /etc/gerbera/config.xml /etc/gerbera/config.xml.bak
+
+sudo nano /etc/gerbera/config.xml
+значение параметра ui enabled = "yes"
+gerbera:.hfkfvjd
+
+<mysql enabled="yes"/>
+<host>localhost</host>
+<port>1433</port>
+<username>gerbera</username>
+<password>.hfkfvjd</password>
+<database>gerbera</database>
+
+sudo nano /etc/ufw/applications.d/gerbera
+
+[Gerbera]
+title=Gerbera is an UPnP Media Server 
+description=It allows you to stream your digital media through your home network and listen to/watch it on a variety of UPnP compatible devices
+ports=49152
+
+sudo ufw allow Gerbera
+sudo ufw reload && sudo ufw status verbose
+
+sudo systemctl enable gerbera.service
+# sudo systemctl is-enabled gerbera - Может не понадобится
+sudo systemctl start gerbera && sudo systemctl status gerbera
+
+Если журнал не создался
+sudo touch /var/log/gerbera
+sudo chown -Rv root:gerbera /var/log/gerbera
+sudo chmod -Rv 0660 /var/log/gerbera
+=======================================
+
+http://192.168.0.3:49152
+======================================
+После установки mysql
+
+mysql -u yura -p
+CREATE USER 'gerbera'@'localhost' IDENTIFIED BY '.hfkfvjd';
+CREATE DATABASE gerbera;
+GRANT ALL ON gerbera.* TO 'gerbera'@'localhost';
+mysql -u gerbera -p
+use gerbera;
+source /usr/share/gerbera/mysql.sql;
+
+sudo mkdir -p /mnt/usbhdd/media/{Video,Audio,Photo}
+sudo chmod -R 777 /mnt/usbhdd/media
+sudo chown -R nobody:nogroup /mnt/usbhdd/media

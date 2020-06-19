@@ -1,0 +1,4 @@
+HTTrack
+sudo apt-get install httrack
+
+httrack --mirror http://test.ru/test/HTML/ -O /srv/shared/httrack/test.ru --robots=0

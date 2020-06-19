@@ -1,0 +1,60 @@
+==============================
+Настройка Samba
+
+sudo apt install samba
+sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+
+sudo mkdir -p /srv/samba/shared/
+sudo chown -R nobody:nogroup /srv/samba/shared/
+sudo chmod -R 0777 /srv/samba/shared/
+
+sudo nano /etc/samba/smb.conf
+
+# Global parameters
+[global]
+        bind interfaces only = Yes
+        dns proxy = No
+        log file = /var/log/samba/log.%m
+        map to guest = Bad User
+        max log size = 1000
+        name resolve order = bcast host
+        netbios name = UBUNTU SHARE
+        panic action = /usr/share/samba/panic-action %d
+        security = USER
+        server min protocol = SMB2
+        server string = %h server (Samba, Ubuntu)
+        idmap config * : backend = tdb
+
+[Shared]
+        create mask = 0777
+        directory mask = 0777
+        force user = nobody
+        guest ok = Yes
+        guest only = Yes
+        path = /srv/samba/shared
+        read only = No
+
+[Media]
+        create mask = 0777
+        directory mask = 0777
+        force user = nobody
+        guest ok = Yes
+        guest only = Yes
+        path = /mnt/usbhdd/media
+        read only = No		
+
+
+testparm
+
+ulimit -n 16384
+
+sudo cp /etc/security/limits.conf /etc/security/limits.conf.bak
+sudo nano /etc/security/limits.conf
+*               -       nofile          16384
+root            -       nofile          16384
+
+sudo systemctl restart smbd.service && sudo systemctl status smbd.service
+
+sudo ufw reload && sudo ufw status verbose
+===================================
+sudo cp -p {/etc/security/limits.conf,/etc/samba/smb.conf} /srv/backup
