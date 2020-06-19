@@ -2,7 +2,7 @@ wget https://repo.mysql.com/mysql-apt-config_0.8.15-1_all.deb
 sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
 sudo apt install -f && sudo apt update %% sudo apt upgrade -y
 sudo apt install mysql-server -y
-User$123
+пароль root mysql - Flvby$123
 
 Создать пользователя
 mysql -u root -p
