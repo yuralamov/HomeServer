@@ -1,0 +1,66 @@
+# Установка по умолчанию MySQL от Oracle
+# На https://repo.mysql.com/ узнайте последнюю версию конфига
+$ wget https://repo.mysql.com/mysql-apt-config_0.8.15-1_all.deb
+$ sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
+# В процессе конфигурирования выберите нужные версии
+$ sudo apt install -f && sudo apt update && sudo apt upgrade -y
+$ sudo apt install mysql-server -y
+# Задайте пароль администратора (root) сервера mysql
+# И выберите уровень защиты
+# Создать пользователя с большими привилегиями
+$ mysql -u root -p
+# Здесь Вас просят ввести пароль root mysql
+# Далее выполним следующий скрипт mysql
+> CREATE USER 'user' IDENTIFIED BY 'User$123';
+> GRANT ALL PRIVILEGES ON *.* TO 'user' WITH GRANT OPTION;
+# Заодно проверим порт
+> show variables like 'port';
+# Выход
+> QUIT
+Проверка системы и версии
+$ systemctl status mysql.service
+$ sudo mysqladmin -p -u root version
+# Создадим правило для ufw
+$ sudo nano /etc/ufw/applications.d/mysql
+#########
+[MySQL]
+title=Cross-platform MySQL Server 
+description=Very fast, multithreaded, multi-user, and robust SQL database server
+ports=3306/tcp
+#########
+$ sudo ufw allow MySQL 
+$ sudo ufw reload && sudo ufw status verbose
+#########
+# Если Вам нужно изменить расположение баз данных, то 
+# Узнать где располагаются
+$ mysql -u user -p
+> select @@datadir;
+> quit
+# Остановить mysql
+$ sudo systemctl stop mysql && sudo systemctl status mysql
+# Скопировать куда надо
+$ sudo rsync -av /var/lib/mysql /srv/
+# Переименовать исходник
+$ sudo mv /var/lib/mysql /var/lib/mysql.bak
+# Скорректировать конфиг
+$ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+	datadir         = /srv/mysql
+# Настроить алиасы
+$ sudo nano /etc/apparmor.d/tunables/alias
+##
+alias /var/lib/mysql/ -> /home/mysql/
+##
+# Перезапуск службы apparmor
+$ sudo systemctl restart apparmor
+# Запуск mysql
+$ sudo systemctl start mysql && sudo systemctl status mysql
+# Проверка 
+> mysql -u user -p
+> select @@datadir;
+> QUIT
+# Удаление исходника, если все ОК
+$ sudo rm -rf /var/lib/mysql.bak
+$ А это на всякий случай
+$ sudo ln -s /srv/mysql/ /var/lib/mysql
+
+sudo cp -p {/etc/mysql/mysql.conf.d/mysqld.cnf,/etc/apparmor.d/tunables/alias} /srv/backup
