@@ -62,5 +62,3 @@ $ sudo systemctl start mysql && sudo systemctl status mysql
 $ sudo rm -rf /var/lib/mysql.bak
 $ А это на всякий случай
 $ sudo ln -s /srv/mysql/ /var/lib/mysql
-
-sudo cp -p {/etc/mysql/mysql.conf.d/mysqld.cnf,/etc/apparmor.d/tunables/alias} /srv/backup
