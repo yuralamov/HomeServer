@@ -11,7 +11,6 @@ sdb    698,7G        disk
 ├─sdb2 139,7G ext4   part /var
 ├─sdb3    14G ext4   part /tmp
 └─sdb4 537,5G ext4   part /srv
-############
 # Пользователь с правами sudo	= user:User_123
 # Нагрузки при установке	= Samba + сервер SSH
 ############
@@ -27,8 +26,6 @@ $ ssh-keygen -t rsa -b 4096 -C "user@hotmail.com"
 $ ssh-copy-id user@192.168.0.21
 # Подключение к новоиспеченному серверу по ssh
 $ ssh user@192.168.0.21
-# Если уже были соединения по ssh с этим хостом, то
-$ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.6"
 ############
 # Сохраним исходный файл источников
 $ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
@@ -36,4 +33,4 @@ $ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 $ sudo sed -i 's/http:\/\/ru.archive.ubuntu.com/http:\/\/archive.ubuntu.com/' /etc/apt/sources.list
 # Обновление и перезагрузка
 $ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
-######
+############
