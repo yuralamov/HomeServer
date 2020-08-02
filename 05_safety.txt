@@ -1,0 +1,21 @@
+# Настройка ufw
+$ sudo apt install ufw && sudo ufw status verbose
+# Какие на этот момент есть правила
+$ sudo ufw app list
+# Разрешим правило для ssh сервера
+$ sudo ufw allow OpenSSH
+# Разрешим правило для Samba
+$ sudo ufw allow Samba
+# Средненькое логирование
+$ sudo ufw logging medium
+# Ufw на запуск
+$ sudo ufw enable
+# Перегрузим и посмотрим, что получилось
+$ sudo ufw reload && sudo ufw status verbose
+######
+# fail2ban - Против любителей потыкаться
+$ sudo apt-get install fail2ban -y
+# Параметры /etc/fail2ban/jail.conf.
+# Существующие фильтры /etc/fail2ban/filter.d/.
+# Существующие правила реагирования /etc/fail2ban/action.d/.
+######
