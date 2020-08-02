@@ -1,0 +1,55 @@
+# Настройка сети
+# Смотреть, какой конфигурационный файл
+$ ls /etc/netplan/
+# Например, это 01-netcfg.yaml
+$ sudo cp /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.bak
+# Сетевые интерфейсы смотрим по
+$ ip a
+# При наличии двух сетевых интерфейсов можно сделать агрегацию
+# Если не нужно, то снимите экраны и не создавайте файл /etc/netplan/bond0.yaml
+# А также верните проводному интерфейсу 192.168.0.21
+# Для примера взяты Wifi и Lan
+$ sudo nano /etc/netplan/01-netcfg.yaml
+# Здесь повнимательнее - подразделы отделяются двумя пробелами
+###
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlp3s0:
+      dhcp4: no
+      access-points:
+        Здесь_точка_доступа:
+          password: А_здесь_ее_пароль
+#      addresses: [192.168.0.24/24,]
+#      gateway4: 192.168.0.1
+#      nameservers:
+#        addresses: [192.168.0.1,8.8.8.8,]
+#        search: []
+      optional: true
+  ethernets:
+    enp2s0:
+      dhcp4: no
+#      addresses: [192.168.0.22/24,]
+#      gateway4: 192.168.0.1
+#      nameservers:
+#        addresses: [192.168.0.1,8.8.8.8,]
+#        search: []
+      optional: true
+###
+# Создаем файл объединения сетевых интерфейсов
+nano /etc/netplan/bond0.yaml
+network:
+ bonds:
+  bond0:
+   addresses: [192.168.0.21/24]
+   gateway4: 192.168.0.1
+   nameservers:
+    addresses: [192.168.0.1,8.8.8.8]
+   interfaces: [enp2s0, wlp3s0]
+
+sudo netplan apply
+sudo systemctl daemon-reload
+######
