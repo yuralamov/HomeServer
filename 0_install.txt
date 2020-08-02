@@ -1,0 +1,39 @@
+# Разметка диска при установке (Моя)
+$ lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
+NAME     SIZE FSTYPE TYPE MOUNTPOINT
+sda    465,8G        disk 
+├─sda1   487M ext4   part /boot
+├─sda2   122M vfat   part /boot/efi
+├─sda3  32,6G ext4   part /
+└─sda4 432,6G ext4   part /home
+sdb    698,7G        disk 
+├─sdb1   7,5G swap   part [SWAP]
+├─sdb2 139,7G ext4   part /var
+├─sdb3    14G ext4   part /tmp
+└─sdb4 537,5G ext4   part /srv
+############
+# Пользователь с правами sudo	= user:User_123
+# Нагрузки при установке	= Samba + сервер SSH
+############
+# После перезагрузки узнать IP и сетевые интерфейсы сервера
+$ ip a
+# Предположим, что IP сервера 192.168.0.21
+############
+# Создание ключа ssh на хосте
+$ ssh-keygen -t rsa -b 4096 -C "user@hotmail.com"
+# Здесь адрес почты - подтвержденная почта на github
+# Если нет, то и не надо
+# Копирование публичного ключа на сервер
+$ ssh-copy-id user@192.168.0.21
+# Подключение к новоиспеченному серверу по ssh
+$ ssh user@192.168.0.21
+# Если уже были соединения по ssh с этим хостом, то
+$ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.6"
+############
+# Сохраним исходный файл источников
+$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+# Замена локации источников на основной сервер
+$ sudo sed -i 's/http:\/\/ru.archive.ubuntu.com/http:\/\/archive.ubuntu.com/' /etc/apt/sources.list
+# Обновление и перезагрузка
+$ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
+######
