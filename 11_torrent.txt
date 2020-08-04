@@ -7,7 +7,7 @@ $ sudo service transmission-daemon stop && sudo service transmission-daemon stat
 # Подготовка файловой системы
 $ sudo mkdir -p /srv/torrents/{incomplete,watch}
 $ sudo chmod -R 0777 /srv/torrents/
-sudo chown -R debian-transmission:debian-transmission /srv/torrents/
+$ sudo chown -R debian-transmission:debian-transmission /srv/torrents/
 # Сохранение исходного конфига
 $ sudo cp /etc/transmission-daemon/settings.json /etc/transmission-daemon/settings.json.bak
 # Конфигурация демона
@@ -32,8 +32,6 @@ $ sudo nano /etc/transmission-daemon/settings.json
 "watch-dir-enabled": true    # Опрос на наличие торрент-файла
 ########
 # Все строки заканчиваются запятой, кроме последней
-$ sudo invoke-rc.d transmission-daemon reload
-$ sudo service transmission-daemon restart && sudo service transmission-daemon status
 # Правило для ufw
 $ sudo nano /etc/ufw/applications.d/transmission-demon
 ########
@@ -44,7 +42,7 @@ ports=9091/tcp
 ########
 $ sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
 # Стартуем
-$ sudo service transmission-daemon start
+$ sudo service transmission-daemon start && sudo service transmission-daemon status
 ===================================
 # Смотрим на
 http://192.168.0.21:9091
