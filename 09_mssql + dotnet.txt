@@ -5,7 +5,6 @@ $ sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubu
 $ curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
 $ sudo apt-get update && sudo apt upgrade -y
 # Установка aspnet и dotnet
-$ sudo apt-get update
 $ sudo apt-get install -y aspnetcore-runtime-3.1 dotnet-runtime-3.1 aspnetcore-runtime-2.1 dotnet-runtime-2.1
 # Отключаем телеметрию
 $ echo 'export DOTNET_CLI_TELEMETRY_OPTOUT=true' | sudo tee -a /etc/profile.d/mssql-tools.sh
