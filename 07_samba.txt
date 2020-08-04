@@ -49,6 +49,6 @@ $ sudo nano /etc/samba/smb.conf
 $ testparm
 # Перезапуск сервиса
 $ sudo systemctl restart smbd.service && sudo systemctl status smbd.service
-# Прегрузка фойервола
+# Прегрузка файервола
 $ sudo ufw reload && sudo ufw status verbose
 ===================================
