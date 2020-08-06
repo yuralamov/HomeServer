@@ -10,10 +10,10 @@ $ sudo nano /etc/gerbera/config.xml
 ########
 Некоторые заначения
 <ui enabled="yes" show-tooltips="yes">
-      <accounts enabled="yes" session-timeout="30">
-        <account user="gerbera" password="gerbera_123"/>
-      </accounts>
-    </ui>
+<accounts enabled="yes" session-timeout="30">
+<account user="gerbera" password="gerbera_123"/>
+</accounts>
+</ui>
 <sqlite3 enabled="no">
 <mysql enabled="yes">
 <host>localhost</host>
