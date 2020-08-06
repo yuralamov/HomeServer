@@ -5,7 +5,7 @@
 Исходя из этих предпосылок был выбран малоиспользуемый ноут DELL Inspiron 3541.
 Процессор AMD A6-6310 APU with Radeon R4 Graphics, 2.4/1.8G, 4 Core.
 Память 8GB Single Channel DDR3L 1600MHz.
-SSD 120GB на SATA3.
+HDD 500GB на SATA3.
 HDD 750GB в OptiBay вместо DVD-ROM.
 UPS этому 'серверу' не нужен.
 
