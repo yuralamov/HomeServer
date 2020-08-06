@@ -9,14 +9,19 @@ $ sudo cp /etc/gerbera/config.xml /etc/gerbera/config.xml.bak
 $ sudo nano /etc/gerbera/config.xml
 ########
 Некоторые заначения
-ui enabled = "yes"
-gerbera:gerbera_123
-<mysql enabled="yes"/>
+<ui enabled="yes" show-tooltips="yes">
+      <accounts enabled="yes" session-timeout="30">
+        <account user="gerbera" password="gerbera_123"/>
+      </accounts>
+    </ui>
+<sqlite3 enabled="no">
+<mysql enabled="yes">
 <host>localhost</host>
 <port>1433</port>
 <username>gerbera</username>
-<password>.hfkfvjd</password>
+<password>gerbera$123</password>
 <database>gerbera</database>
+<ffmpegthumbnailer enabled="yes">
 ########
 # Правило ufw для gerbera
 $ sudo nano /etc/ufw/applications.d/gerbera
@@ -39,9 +44,9 @@ $ mysql -u gerbera -p
 > source /usr/share/gerbera/mysql.sql;
 ########
 # Раздельчик для медиафайлов
-$ sudo mkdir -p /mnt/usbhdd/media/{Video,Audio,Photo}
-$ sudo chmod -R 777 /mnt/usbhdd/media
-$ sudo chown -R nobody:nogroup /mnt/usbhdd/media
+$ sudo mkdir -p /home/media/{Video,Audio,Photo}
+$ sudo chmod -R 777 /home/media
+$ sudo chown -R gerbera:gerbera /home/media
 # Запускаемся
 $ sudo systemctl enable gerbera.service
 $ sudo systemctl start gerbera && sudo systemctl status gerbera
