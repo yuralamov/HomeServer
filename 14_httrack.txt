@@ -5,7 +5,7 @@ httrack --mirror http://test.ru/test/HTML/ -O /srv/shared/httrack/test.ru --robo
 $ sudo ufw allow 8080
 $ sudo mkdir -p /srv/mysite
 $ sudo chown -R user:user /srv/mysyte
-# Или запуск webhttrack и смотрим http://921.168.0.21:8080
+# Или запуск webhttrack и смотрим http://921.168.0.21:8080 -здесь нужно почитать
 ########
 https://kali.tools/?p=1198
 Обычные опции:
