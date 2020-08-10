@@ -1,1 +1,14 @@
 # Настройка менеджера виртуальных машин
+# Проверка поддержки аппаратной виртуализации
+$ sudo apt install cpu-checker
+$ kvm-ok
+# Установка KVM-QEMU
+$ sudo apt-get install qemu-kvm libvirt-bin virtinst libosinfo-bin bridge-utils
+# Каталоги для установочных образов и дисков виртуальной машины 
+$ sudo mkdir -p /srv/kvm/{vhdd,iso}
+$ sudo chown -R user:libvirt /srv/kvm
+# Добавим себя в группы
+$ sudo usermod -aG libvirt $(whoami)
+$ sudo usermod -aG kvm $(whoami)
+# Стартуем демон libvirt
+$ sudo systemctl enable libvirtd && sudo systemctl start libvirtd && sudo systemctl status libvirtd
