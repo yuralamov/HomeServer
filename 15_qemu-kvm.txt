@@ -12,3 +12,26 @@ $ sudo usermod -aG libvirt $(whoami)
 $ sudo usermod -aG kvm $(whoami)
 # Стартуем демон libvirt
 $ sudo systemctl enable libvirtd && sudo systemctl start libvirtd && sudo systemctl status libvirtd
+# Настройка сети, т.е. добавляем мост на действующий интерфейс.
+# Переносим все рабочие настройки интерфейса в созданный br0
+# Как вариант:
+/***************************
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp3s0:
+      dhcp4: no
+  bridges:
+    br0:
+      dhcp4: yes
+      interfaces:
+        - enp3s0
+      addresses:
+        - 192.168.0.8/24
+      gateway4: 192.168.0.1
+      nameservers:
+        addresses: [192.168.0.1, 8.8.8.8]
+        search:
+          - workgroup
+*****************************/
