@@ -3,14 +3,15 @@
 # Установка samba
 $ sudo apt install samba
 # Переименуем конфиг
-$ sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+$ sudo mv /etc/samba/smb.conf /backup/asus/etc/samba/smb.conf.orig
 # И создадим каталог для полной шары
-$ sudo mkdir -p /home/samba/shared/
-$ sudo chown -R nobody:nogroup /home/samba/shared/
-$ sudo chmod -R 0777 /home/samba/shared/
+$ sudo mkdir -p /srv/samba/shared/
+$ sudo chown -R nobody:nogroup /srv/samba/shared/
+$ sudo chmod -R 0777 /srv/samba/shared/
 # Небольшие подготовительные дайствия
 # Изменим ограничения на использование файлов
-$ sudo cp /etc/security/limits.conf /etc/security/limits.conf.bak
+$ sudo mkdir -p /backup/asus/security
+$ sudo cp /etc/security/limits.conf /backup/asus/security/limits.conf.orig
 $ sudo nano /etc/security/limits.conf
 ########
 *               -       nofile          16384
@@ -21,29 +22,56 @@ ulimit -n 16384
 # Создаем новый конфиг samba
 $ sudo nano /etc/samba/smb.conf
 #########
+Load smb config files from /etc/samba/smb.conf
+Processing section "[printers]"
+Processing section "[print$]"
+Processing section "[Shared]"
+Loaded services file OK.
+Server role: ROLE_STANDALONE
+
+Press enter to see a dump of your service definitions
+
 # Global parameters
 [global]
-        bind interfaces only = Yes
-        dns proxy = No
-        log file = /var/log/samba/log.%m
-        map to guest = Bad User
-        max log size = 1000
-        name resolve order = bcast host
-        netbios name = UBUNTU SHARE
-        panic action = /usr/share/samba/panic-action %d
-        security = USER
-        server min protocol = SMB2
-        server string = %h server (Samba, Ubuntu)
-        idmap config * : backend = tdb
+	dns proxy = No
+	log file = /var/log/samba/log.%m
+	map to guest = Bad User
+	max log size = 1000
+	obey pam restrictions = Yes
+	pam password change = Yes
+	panic action = /usr/share/samba/panic-action %d
+	passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+	passwd program = /usr/bin/passwd %u
+	server min protocol = SMB2
+	server role = standalone server
+	server string = %h server (Samba, Ubuntu)
+	unix password sync = Yes
+	usershare allow guests = Yes
+	idmap config * : backend = tdb
+
+
+[printers]
+	browseable = No
+	comment = All Printers
+	create mask = 0700
+	path = /var/spool/samba
+	printable = Yes
+
+
+[print$]
+	comment = Printer Drivers
+	path = /var/lib/samba/printers
+
 
 [Shared]
-        create mask = 0777
-        directory mask = 0777
-        force user = nobody
-        guest ok = Yes
-        guest only = Yes
-        path = /home/samba/shared
-        read only = No
+	create mask = 0777
+	directory mask = 0777
+	force user = nobody
+	guest ok = Yes
+	guest only = Yes
+	path = /srv/samba/shared
+	read only = No
+
 ########
 #Проверим, что получилось
 $ testparm
