@@ -1,16 +1,11 @@
-# Установка по умолчанию MySQL от Oracle
-# На https://repo.mysql.com/ узнайте последнюю версию конфига
-$ wget https://repo.mysql.com/mysql-apt-config_0.8.15-1_all.deb
-$ sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
-# В процессе конфигурирования выберите нужные версии
+# Установка по умолчанию MySQL
 $ sudo apt install -f && sudo apt update && sudo apt upgrade -y
 $ sudo apt install mysql-server -y
+$ sudo mysql_secure_installation
 # Задайте пароль администратора (root) сервера mysql
 # И выберите уровень защиты
 # Создать пользователя с большими привилегиями
-$ mysql -u root -p
-# Здесь Вас просят ввести пароль root mysql
-# Далее выполним следующий скрипт mysql
+$ sudo mysql
 > CREATE USER 'user' IDENTIFIED BY 'User$123';
 > GRANT ALL PRIVILEGES ON *.* TO 'user' WITH GRANT OPTION;
 # Заодно проверим порт
@@ -19,7 +14,7 @@ $ mysql -u root -p
 > QUIT
 Проверка системы и версии
 $ systemctl status mysql.service
-$ sudo mysqladmin -p -u root version
+$ sudo mysqladmin -p -u user version
 # Создадим правило для ufw
 $ sudo nano /etc/ufw/applications.d/mysql
 #########
