@@ -52,9 +52,9 @@ $ sudo chown -R gerbera:gerbera /srv/media
 $ sudo systemctl enable gerbera.service
 $ sudo systemctl start gerbera && sudo systemctl status gerbera
 # Если журнал не создался
-$ sudo touch /var/log/gerbera
-$ sudo chown -Rv root:gerbera /var/log/gerbera
-$ sudo chmod -Rv 0660 /var/log/gerbera
+$ sudo touch /var/log/gerbera.log
+$ sudo chown -Rv root:gerbera /var/log/gerbera.log
+$ sudo chmod -Rv 0660 /var/log/gerbera.log
 =======================================
 Смотрим на
 http://192.168.0.8:49152
