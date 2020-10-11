@@ -45,9 +45,9 @@ $ mysql -u gerbera -p
 > source /usr/share/gerbera/mysql.sql;
 ########
 # Раздельчик для медиафайлов
-$ sudo mkdir -p /home/media/{Video,Audio,Photo}
-$ sudo chmod -R 777 /home/media
-$ sudo chown -R gerbera:gerbera /home/media
+$ sudo mkdir -p /srv/media/{Video,Audio,Photo}
+$ sudo chmod -R 777 /srv/media
+$ sudo chown -R gerbera:gerbera /srv/media
 # Запускаемся
 $ sudo systemctl enable gerbera.service
 $ sudo systemctl start gerbera && sudo systemctl status gerbera
