@@ -14,4 +14,4 @@ ports=10000
 $ sudo ufw allow WebMIN
 $ sudo ufw reload && sudo ufw status verbose
 ===================================
-# Подключение https://192.168.0.21:10000
+# Подключение https://192.168.0.8:10000
