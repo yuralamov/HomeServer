@@ -1,7 +1,7 @@
 #########
 # Настройка железа
 #########
-# Игнорировать закрытие крышки (все-таки ноут)
+# Игнорировать закрытие крышки в ноутбуке
 $ sudo cp /etc/systemd/logind.conf /etc/systemd/logind.conf.bak
 $ sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
 #########
