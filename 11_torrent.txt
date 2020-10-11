@@ -5,9 +5,9 @@ $ sudo apt install transmission-daemon -y
 # Остановим сервис
 $ sudo service transmission-daemon stop && sudo service transmission-daemon status
 # Подготовка файловой системы
-$ sudo mkdir -p /srv/torrents/{incomplete,watch}
-$ sudo chmod -R 0777 /srv/torrents/
-$ sudo chown -R debian-transmission:debian-transmission /srv/torrents/
+$ sudo mkdir -p /var/lib/transmission-daemon/{downloads,incomplete}
+$ sudo chmod -R 0777 /var/lib/transmission-daemon/{downloads,incomplete}
+$ sudo chown -R debian-transmission:debian-transmission /var/lib/transmission-daemon/{downloads,incomplete}
 # Сохранение исходного конфига
 $ sudo mkdir -p /backup/asus/etc/transmission-daemon
 $ sudo cp /etc/transmission-daemon/settings.json /backup/asus/etc/transmission-daemon/settings.json.orig
