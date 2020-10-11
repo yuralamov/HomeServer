@@ -5,7 +5,8 @@ $ sudo apt-get update && sudo apt install gerbera exif exiv2 ffmpeg ffmpegthumbn
 $ sudo dpkg-reconfigure libdvd-pkg
 # Конфигурирование
 $ sudo systemctl stop gerbera && sudo systemctl status gerbera
-$ sudo cp /etc/gerbera/config.xml /etc/gerbera/config.xml.bak
+$ sudo mkdir -p /backup/asus/etc/gerbera
+$ sudo cp /etc/gerbera/config.xml /backup/asus/etc/gerbera/config.xml.orig
 $ sudo nano /etc/gerbera/config.xml
 ########
 Некоторые заначения
@@ -19,7 +20,7 @@ $ sudo nano /etc/gerbera/config.xml
 <host>localhost</host>
 <port>1433</port>
 <username>gerbera</username>
-<password>gerbera$123</password>
+<password>Gerbera$123</password>
 <database>gerbera</database>
 <ffmpegthumbnailer enabled="yes">
 ########
@@ -35,7 +36,7 @@ $ sudo ufw allow Gerbera
 $ sudo ufw reload && sudo ufw status verbose
 # База данных и пользователь
 $ mysql -u user -p
-> CREATE USER 'gerbera'@'localhost' IDENTIFIED BY 'gerbera$123';
+> CREATE USER 'gerbera'@'localhost' IDENTIFIED BY 'Gerbera$123';
 > CREATE DATABASE gerbera;
 > GRANT ALL ON gerbera.* TO 'gerbera'@'localhost';
 > QUIT
@@ -56,5 +57,5 @@ $ sudo chown -Rv root:gerbera /var/log/gerbera
 $ sudo chmod -Rv 0660 /var/log/gerbera
 =======================================
 Смотрим на
-http://192.168.0.21:49152
+http://192.168.0.8:49152
 ======================================
