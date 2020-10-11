@@ -2,9 +2,11 @@
 # Настройка железа
 #########
 # Игнорировать закрытие крышки в ноутбуке
-$ sudo cp /etc/systemd/logind.conf /etc/systemd/logind.conf.bak
+$ sudo mkdir -p /backup/asus/etc/systemd
+$ sudo cp /etc/systemd/logind.conf /backup/asus/etc/systemd/logind.conf.orig
 $ sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
-#########
+$ sudo cp /etc/systemd/logind.conf /backup/asus/etc/systemd/logind.conf
+#########Это для ноута
 # Погасить экран (через минутку, чтоб не маячил)
 $ echo -e '#!/bin/bash\n#/etc/rc.local\nsetterm --blank 1\nexit 0\n' | sudo tee /etc/rc.local
 $ sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
