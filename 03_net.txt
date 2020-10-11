@@ -1,5 +1,6 @@
 # Настройка сети
 $ ls /etc/netplan/
+$ sudo mkdir -p /backup/asus/etc/netplan
 $ sudo cp /etc/netplan/01-netcfg.yaml /backup/asus/etc/netplan/01-netcfg.yaml.orig
 $ ip a
 # При наличии двух сетевых интерфейсов можно сделать агрегацию
