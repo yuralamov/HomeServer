@@ -25,7 +25,7 @@ $ sudo systemctl restart mssql-server
 # Средства командной строки и powershell
 $ sudo apt install -y mssql-tools unixodbc-dev powershell
 # Добавить пути к исполняемым файлам
-$ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' | sudo tee /etc/profile.d/mssql-tools.sh
+$ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' | sudo tee -a /etc/profile.d/mssql-tools.sh
 $ export PATH="$PATH:/opt/mssql-tools/bin"
 # Создание пользователя с админскими правами для sql сервера
 $ /opt/mssql-tools/bin/sqlcmd -S localhost -U SA
