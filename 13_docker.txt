@@ -22,4 +22,4 @@ $ sudo ufw allow Portainer && sudo ufw reload && sudo ufw status verbose
 $ docker start/stop portainer
 ########
 # Управляется по вебке
-http://192.168.0.21:9000
+http://192.168.0.8:9000
