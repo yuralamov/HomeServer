@@ -22,6 +22,17 @@ $ sudo systemctl restart mssql-server
 # Полнотекстовый поиск
 $ sudo apt-get install -y mssql-server-fts
 $ sudo systemctl restart mssql-server
+#########################################################################################
+# Использование MS SQL сервера в docker
+docker pull mcr.microsoft.com/mssql/server:2019-latest
+# или docker pull mcr.microsoft.com/mssql/server:2017-latest
+# С использованием вольюма 2 пути:
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Flvby$1966" -e 'MSSQL_PID=Developer' -p 1433:1433 --name sql2019 -h sql2019 --restart=always -v /var/opt/mssql/data:/var/opt/mssql/data -v /var/opt/mssql/log:/var/opt/mssql/log -v /var/opt/mssql/secrets:/var/opt/mssql/secrets -d mcr.microsoft.com/mssql/server:2019-latest
+# или
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Flvby$1966" -e 'MSSQL_PID=Developer' -p 1433:1433 --name sql2019 -h sql2019 --restart=always -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2019-latest
+# подключение в терминале
+docker exec -it sql2019 "bash"
+#########################################################################################
 # Средства командной строки и powershell
 $ sudo apt install -y mssql-tools unixodbc-dev powershell
 # Добавить пути к исполняемым файлам
