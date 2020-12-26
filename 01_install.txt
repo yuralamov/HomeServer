@@ -1,15 +1,4 @@
-# Разметка диска при установке (Моя)
-$ lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
-sda    465,8G          disk 
-├─sda1   512M vfat     part /boot/efi
-├─sda2     2G ext4     part /boot
-└─sda3 463,3G ext4     part /home
-sdb      3,7T          disk 
-└─sdb1   3,7T ext4     part /srv
-sdc      3,7T          disk 
-├─sdc1    32G swap     part [SWAP]
-└─sdc2   3,6T ext4     part /
-
+# Без использования lvm
 # Нагрузки при установке	= Samba + сервер SSH
 ############
 $ ip a
