@@ -33,6 +33,7 @@ $ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"
 ############
 # Создать папку для бэкапов
 $ sudo mkdir -p /home/backup && sudo chown -R root:root /home/backup && sudo chmod -R 0700 /home/backup
+$ sudo cp -a /etc/apt/sources.list /home/backup/
 # Обновление и перезагрузка
 $ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
 ############
