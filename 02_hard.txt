@@ -1,20 +1,3 @@
 #########
 # Настройка железа
 #########
-# Игнорировать закрытие крышки в ноутбуке
-$ sudo mkdir -p /backup/asus/etc/systemd
-$ sudo cp /etc/systemd/logind.conf /backup/asus/etc/systemd/logind.conf.orig
-$ sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
-$ sudo cp /etc/systemd/logind.conf /backup/asus/etc/systemd/logind.conf
-#########Это для ноута
-# Погасить экран (через минутку, чтоб не маячил)
-$ echo -e '#!/bin/bash\n#/etc/rc.local\nsetterm --blank 1\nexit 0\n' | sudo tee /etc/rc.local
-$ sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
-$ sudo systemctl restart rc-local
-#########
-# Использования раздела\файла swap после занятости 90% RAM (кроме статичных блоков, к которым давно не обращались)
-$ sudo cp /etc/sysctl.conf /etc/sysctl.conf.bak
-$ echo vm.swappiness=10 | sudo tee -a /etc/sysctl.conf
-$ sudo update-initramfs -u
-$ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
-#########
