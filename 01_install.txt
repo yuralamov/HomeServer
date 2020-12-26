@@ -1,17 +1,14 @@
 # Разметка диска при установке (Моя)
 $ lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
-NAME     SIZE FSTYPE TYPE MOUNTPOINT
-sda      3,7T        disk 
-└─sda1   3,7T ext4   part /srv
-sdb    465,8G        disk 
-├─sdb1   953M ext4   part /boot
-├─sdb2   488M vfat   part /boot/efi
-├─sdb3   7,5G swap   part [SWAP]
-└─sdb4 456,9G ext4   part /home
-sdc      1,8T        disk 
-└─sdc1   1,8T ext4   part /backup
-sdd      3,7T ext4   disk /
-sr0     1024M        rom  
+sda    465,8G          disk 
+├─sda1   512M vfat     part /boot/efi
+├─sda2     2G ext4     part /boot
+└─sda3 463,3G ext4     part /home
+sdb      3,7T          disk 
+└─sdb1   3,7T ext4     part /srv
+sdc      3,7T          disk 
+├─sdc1    32G swap     part [SWAP]
+└─sdc2   3,6T ext4     part /
 
 # Нагрузки при установке	= Samba + сервер SSH
 ############
@@ -28,16 +25,14 @@ $ ssh-add /home/user/.ssh/id_rsa
 # Копирование публичного ключа на сервер
 $ ssh-copy-id user@192.168.0.8
 # Подключение к новоиспеченному серверу по ssh
-$ ssh user@192.168.0.21
+$ ssh user@192.168.0.8
 # Если не задавали контрольную фразу, то произойдет вход
 # При первом входе подтвердить отпечаток
 # Если уже был сгенерирован ключ к этому хосту, то удалить старый
-$ ssh-keygen -f "/home/yura/.ssh/known_hosts" -R "192.168.0.8"
+$ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"
 ############
-# Сохраним исходный файл источников
-$ sudo cp /etc/apt/sources.list /backup/asus/etc/apt/sources.list.bak
-# Замена локации источников на основной сервер
-$ sudo sed -i 's/http:\/\/ru.archive.ubuntu.com/http:\/\/archive.ubuntu.com/' /etc/apt/sources.list
+# Создать папку для бэкапов
+$ sudo mkdir -p /home/backup && sudo chown -R root:root /home/backup && sudo chmod -R 0700 /home/backup
 # Обновление и перезагрузка
 $ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
 ############
