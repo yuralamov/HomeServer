@@ -1,13 +1,35 @@
-# Без использования lvm
-# Нагрузки при установке	= Samba + сервер SSH
 ############
-$ ip a
-# 192.168.0.8
+# Пусть не будет заставки при загрузке
+sudo /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT=""
+sudo update-grub
 ############
+# Конфигурирование локали и клавиатуры
+sudo dpkg-reconfigure {locales,console-setup,keyboard-configuration}
+############
+# Подкачка и память
+# Что за подкачка после установщика
+sudo swapon --show
+# Выключаем
+sudo swapoff /swapfile
+# Делаем побольше. Вместо /swapfile имя файла полный путь
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+ls -lh /swapfile
+sudo swapon /swapfile
+sudo swapon --show
+# Память
+sudo apt install -y preload
+sudo nano /etc/sysctl.conf
+vm.swappiness=10
+vm.vfs_cache_pressure=50
+############
+# ssh
+sudo apt install ssh
 # Создание ключа ssh на хосте
 $ ssh-keygen -t rsa -b 4096 -C "user@hotmail.com"
-# Здесь адрес почты - подтвержденная почта на github
-# Если нет, то и не надо
+# Здесь адрес почты - подтвержденная почта на github, если нет, то и не надо
 # Запуск агента ssh и импортирование ключа
 $ eval $(ssh-agent -s)
 $ ssh-add /home/user/.ssh/id_rsa
@@ -19,10 +41,39 @@ $ ssh user@192.168.0.8
 # При первом входе подтвердить отпечаток
 # Если уже был сгенерирован ключ к этому хосту, то удалить старый
 $ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"
-############
-# Создать папку для бэкапов
-$ sudo mkdir -p /home/backup && sudo chown -R root:root /home/backup && sudo chmod -R 0700 /home/backup
-$ sudo cp -a /etc/apt/sources.list /home/backup/
-# Обновление и перезагрузка
-$ sudo apt update && sudo apt upgrade -y && sudo reboot -h now
-############
+#############
+# Брандмауэр
+sudo apt install ufw fail2ban && sudo ufw status verbose
+sudo ufw app list
+sudo ufw allow OpenSSH
+sudo ufw logging medium
+sudo ufw enable && sudo ufw reload && sudo ufw status verbose
+#############
+# Системные звуки xubuntu
+# https://stone-guest.livejournal.com/
+sudo apt install ubuntu-sounds dconf-editor sox gnome-session-canberra libcanberra-gtk0 libcanberra-gtk-module  libcanberra-gtk3-0 libcanberra-gtk3-module libcanberra-pulse
+# Настройки Внешний вид -> Настройки -> Звуки событий; Терминал xfce -> Дополнительно -> Звуковое оповещение; Редактор настроек -> xsettings -> /Net/SoundThemeName -> ubuntu; Редактор dconf -> org -> gnome -> desktop -> sound -> input-feedback-sounds и theme-name (ubuntu)
+sudo nano /etc/X11/Xsession.d/52libcanberra-gtk3-module_add-to-gtk-modules
+# This file is sourced by Xsession(5), not executed.
+
+if [ -z "$GTK_MODULES" ] ; then
+   GTK_MODULES="canberra-gtk3-module"
+else
+   GTK_MODULES="$GTK_MODULES:canberra-gtk3-module"
+fi
+export GTK_MODULES
+#
+sudo nano /etc/X11/Xsession.d/52libcanberra-gtk-module_add-to-gtk-modules
+# This file is sourced by Xsession(5), not executed.
+
+if [ -z "$GTK_MODULES" ] ; then
+   GTK_MODULES="canberra-gtk-module"
+else
+   GTK_MODULES="$GTK_MODULES:canberra-gtk-module"
+fi
+export GTK_MODULES
+
+#
+В автозагрузку 
+/usr/bin/canberra-gtk-play -i desktop-login
+######
