@@ -23,3 +23,14 @@ $ docker start/stop portainer
 ########
 # Управляется по вебке
 http://192.168.0.8:9000
+########
+# Перенос папки с образами
+docker info
+sudo systemctl stop docker && sudo systemctl status docker
+sudo nano /etc/docker/daemon.json
+{
+    "data-root": "/srv/docker"
+}
+sudo mv /var/lib/docker /srv/
+ln -s /srv/docker /var/lib/
+sudo systemctl start docker && sudo systemctl status docker
