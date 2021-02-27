@@ -1,21 +1,19 @@
-# Настройка ufw
-$ sudo apt install ufw && sudo ufw status verbose
-# Какие на этот момент есть правила
-$ sudo ufw app list
-# Разрешим правило для ssh сервера
-$ sudo ufw allow OpenSSH
-# Разрешим правило для Samba
-$ sudo ufw allow Samba
-# Средненькое логирование
-$ sudo ufw logging medium
-# Ufw на запуск
-$ sudo ufw enable
-# Перегрузим и посмотрим, что получилось
-$ sudo ufw reload && sudo ufw status verbose
-######
-# fail2ban - Против любителей потыкаться
-$ sudo apt-get install fail2ban -y
-# Параметры /etc/fail2ban/jail.conf.
-# Существующие фильтры /etc/fail2ban/filter.d/.
-# Существующие правила реагирования /etc/fail2ban/action.d/.
-######
+# https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04
+cat /proc/mdstat
+sudo umount /dev/md0
+sudo mdadm --stop /dev/md0
+lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
+sudo mdadm --zero-superblock /dev/{sdc,sdd}
+sudo nano /etc/fstab
+sudo nano /etc/mdadm/mdadm.conf
+sudo update-initramfs -u
+sudo mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sda /dev/sdb
+cat /proc/mdstat
+sudo mkfs.ext4 -F /dev/md0
+sudo mkdir -p /mnt/md0
+sudo mount /dev/md0 /mnt/md0
+df -h -x devtmpfs -x tmpfs
+sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
+sudo update-initramfs -u
+echo '/dev/md0 /mnt/md0 ext4 defaults,nofail,discard 0 0' | sudo tee -a /etc/fstab
+
