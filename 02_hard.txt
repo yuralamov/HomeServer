@@ -28,3 +28,5 @@ exit 0
 $ sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
 $ sudo systemctl restart rc-local
 #########
+
+sudo apt install fancontrol smartmontools lm-sensors
