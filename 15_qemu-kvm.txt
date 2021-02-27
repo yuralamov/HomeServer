@@ -3,9 +3,9 @@
 $ sudo apt install cpu-checker
 $ kvm-ok
 # Установка KVM-QEMU
-$ sudo apt-get install qemu-kvm libvirt-bin virtinst libosinfo-bin bridge-utils
+$ sudo apt-get install qemu-kvm libvirt-daemon-system virtinst libosinfo-bin cpu-checker libguestfs-tools bridge-utils
 # Каталоги для установочных образов и дисков виртуальной машины 
-$ sudo mkdir -p /srv/kvm/{vhdd,iso}
+$ sudo mkdir -p /srv/kvm/
 $ sudo chown -R user:libvirt /srv/kvm
 # Добавим себя в группы
 $ sudo usermod -aG libvirt $(whoami)
@@ -15,24 +15,51 @@ $ sudo systemctl enable libvirtd && sudo systemctl start libvirtd && sudo system
 # Настройка сети, т.е. добавляем мост на действующий интерфейс.
 # Переносим все рабочие настройки интерфейса в созданный br0
 # Как вариант:
+sudo nano /etc/netplan/00-installer-config.yaml
 /***************************
 network:
-  version: 2
-  renderer: networkd
   ethernets:
     enp3s0:
-      dhcp4: no
+      dhcp4: false
+      dhcp6: false
   bridges:
     br0:
-      dhcp4: yes
-      interfaces:
-        - enp3s0
+      interfaces: [enp3s0]
       addresses:
-        - 192.168.0.8/24
+      - 192.168.0.8/24
       gateway4: 192.168.0.1
       nameservers:
-        addresses: [192.168.0.1, 8.8.8.8]
+        addresses:
+        - 192.168.0.1
+        - 8.8.8.8
         search:
-          - workgroup
+        - WORKGROUP
+      dhcp4: no
+      dhcp6: no
+  version: 2
 *****************************/
+sudo netplan generate 
+sudo netplan --debug apply
+brctl show
+networkctl
+networkctl status br0
+ip a | grep " br0:" -A 3
+ip route
+arp -n
+nano host-bridge.xml
+#
+<network>
+  <name>host-bridge</name>
+  <forward mode="bridge"/>
+  <bridge name="br0"/>
+</network>
+#
+sudo virsh net-define host-bridge.xml
+sudo virsh net-start host-bridge
+sudo virsh net-autostart host-bridge
+sudo virsh net-list --all
+
+
 # На машине-клиенте ставим Менеджер виртуальных машин и подключаем его к северу
+sudo apt install virt-manager
+
