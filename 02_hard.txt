@@ -30,3 +30,8 @@ $ sudo systemctl restart rc-local
 #########
 
 sudo apt install fancontrol smartmontools lm-sensors
+
+#########
+# Если ubuntu server на Hyper-V
+lsmod | grep hv_utils
+ps -ef | grep hv
