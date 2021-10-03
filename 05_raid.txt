@@ -1,19 +1,39 @@
-# https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04
-cat /proc/mdstat
-sudo umount /dev/md0
-sudo mdadm --stop /dev/md0
+Подготовка дисков
 lsblk -o NAME,SIZE,FSTYPE,TYPE,MOUNTPOINT
-sudo mdadm --zero-superblock /dev/{sdc,sdd}
+sudo fdisk -l
+sudo blkid
+cat /proc/mdstat
+sudo umount /dev/md127
+sudo mdadm --stop /dev/md127
+sudo mdadm --zero-superblock /dev/{sdb,sdc}
+sudo wipefs --all --force /dev/sd{b,c}
 sudo nano /etc/fstab
 sudo nano /etc/mdadm/mdadm.conf
 sudo update-initramfs -u
-sudo mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sda /dev/sdb
-cat /proc/mdstat
-sudo mkfs.ext4 -F /dev/md0
-sudo mkdir -p /mnt/md0
-sudo mount /dev/md0 /mnt/md0
+
+##MDADM
+# https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04
+sudo mdadm --create --verbose /dev/md127 --chunk=64 --level=0 --raid-devices=2 /dev/sd{b,c}
+sudo mkfs.ext4 -b 4096 -E stride=16,stripe-width=32 /dev/md127
+sudo mount /dev/md127 /srv
 df -h -x devtmpfs -x tmpfs
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 sudo update-initramfs -u
-echo '/dev/md0 /mnt/md0 ext4 defaults,nofail,discard 0 0' | sudo tee -a /etc/fstab
+echo '/dev/md127 /srv ext4 defaults,nofail,discard 0 0' | sudo tee -a /etc/fstab
 
+##LVM
+https://losst.ru/sozdanie-i-nastrojka-lvm-linux
+https://www.dmosk.ru/instruktions.php?object=lvm
+sudo apt install lvm2
+sudo pvcreate /dev/sdb /dev/sdc
+sudo pvscan
+sudo pvdisplay
+
+sudo vgcreate vg01 /dev/sdb /dev/sdc
+sudo vgdisplay 
+
+sudo lvcreate -i2 -I64 -L120G -n lv_w22 vg01
+sudo lvdisplay 
+
+Обратиться к устройствам
+/dev/vg01/lv_w22 или /dev/dm-0 или /dev/mapper/vg01-lv_w22
