@@ -3,7 +3,7 @@
 $ sudo apt update && sudo apt upgrade -y
 $ sudo apt install transmission-daemon -y
 # Остановим сервис
-$ sudo service transmission-daemon stop && sudo service transmission-daemon status
+$ sudo systemctl stop transmission-daemon && sudo systemctl status transmission-daemon
 # Подготовка файловой системы
 $ sudo mkdir -p /srv/transmission/{downloads,incomplete}
 $ sudo chmod -R 0777 /srv/transmission/{downloads,incomplete}
