@@ -1,51 +1,36 @@
-===============================
 # Установка transmission-daemon
-$ sudo apt update && sudo apt upgrade -y
-$ sudo apt install transmission-daemon -y
+sudo apt update && sudo apt install transmission-daemon -y
 # Остановим сервис
-$ sudo systemctl stop transmission-daemon && sudo systemctl status transmission-daemon
+sudo systemctl stop transmission-daemon && sudo systemctl status transmission-daemon
 # Подготовка файловой системы
-$ sudo mkdir -p /srv/transmission/{downloads,incomplete}
-$ sudo chmod -R 0777 /srv/transmission/{downloads,incomplete}
-$ sudo chown -R debian-transmission:debian-transmission /srv/transmission/{downloads,incomplete}
+sudo mkdir -p /srv/transmission/{downloads,incomplete}
+sudo chmod -R 0775 /srv/transmission/{downloads,incomplete}
+sudo chown -R debian-transmission:debian-transmission /srv/transmission/{downloads,incomplete}
 # Конфигурация демона
-$ sudo nano /etc/transmission-daemon/settings.json
-# Много настроек, я изменил только некоторые
+sudo nano /etc/transmission-daemon/settings.json
 ########
-{
-    .....
-    "bind-address-ipv4": "192.168.0.8",
-    .....
     "download-dir": "/srv/transmission/downloads",
-    .....
     "incomplete-dir": "/srv/transmission/incomplete",
     "incomplete-dir-enabled": true,
-    .....
-    "rpc-bind-address": "192.168.0.8",
-    .....
     "rpc-password": "Transmission_123",
-    .....
     "rpc-username": "transmission",
     "rpc-whitelist": "127.0.0.1,192.168.0.*",
     "rpc-whitelist-enabled": true,
-    .....
-    "watch-dir": "/home/shared",
+Добавим после запятой
+    "watch-dir": "/srv/shared",
     "watch-dir-enabled": true
-}
-
 ########
-# Все строки заканчиваются запятой, кроме последней
 # Правило для ufw
-$ sudo nano /etc/ufw/applications.d/transmission-demon
+sudo nano /etc/ufw/applications.d/transmission-demon
 ########
 [Transmission]
 title=Cross-platform BitTorrent client 
 description=Transmission is an open source, volunteer-based project
 ports=9091/tcp
 ########
-$ sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
+sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
 # Стартуем
-$ sudo service transmission-daemon start && sudo service transmission-daemon status
+sudo systemctl start transmission-daemon && sudo systemctl status transmission-daemon
 ===================================
 # Смотрим на
 http://192.168.0.8:9091
