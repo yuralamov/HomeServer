@@ -41,12 +41,9 @@ source /usr/share/gerbera/mysql.sql;
 QUIT
 ########
 # Раздельчик для медиафайлов
-sudo mkdir -p /srv/media/{Video,Audio,Photo}
-sudo chmod -R 777 /srv/media
-sudo chown -R gerbera:gerbera /srv/media
+sudo mkdir -p /srv/media/{Video,Audio,Photo} && sudo chmod -R 777 /srv/media && sudo chown -R gerbera:gerbera /srv/media
 # Запускаемся
-sudo systemctl enable gerbera.service
-sudo systemctl start gerbera && sudo systemctl status gerbera
+sudo systemctl enable gerbera.service && sudo systemctl start gerbera && sudo systemctl status gerbera
 =======================================
 Смотрим на
 http://192.168.0.8:49152
