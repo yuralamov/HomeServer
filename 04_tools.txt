@@ -1,8 +1,2 @@
-######
 # Установка утилит 
-$ sudo apt install aptitude mc lynx htop fancontrol iftop nmon speedtest-cli smartmontools lm-sensors ssh samba fail2ban ufw -y
-# Установить датчики
-$ sudo sensors-detect
-# Что они нам показывают
-$ sensors
-######
+sudo apt install aptitude mc lynx htop iftop nmon speedtest-cli smartmontools lm-sensors ssh -y
