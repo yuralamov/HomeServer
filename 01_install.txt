@@ -45,6 +45,8 @@ $ ssh user@192.168.0.8
 # При первом входе подтвердить отпечаток
 # Если уже был сгенерирован ключ к этому хосту, то удалить старый
 $ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"
+# windows openssh  
+ssh-keygen -R 192.168.0.8  
 #############
 # Брандмауэр
 sudo apt install -y ufw fail2ban && sudo ufw status verbose
