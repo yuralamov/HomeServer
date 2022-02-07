@@ -17,6 +17,8 @@ sudo nano /etc/gerbera/config.xml
 <password>Gerbera@123</password>
 <database>gerbera</database>
 <ffmpegthumbnailer enabled="yes">
+<mark-played-items enabled="yes" suppress-cds-updates="yes">
+<map from="avi" to="video/divx" />
 ########
 # Правило ufw для gerbera
 sudo nano /etc/ufw/applications.d/gerbera
