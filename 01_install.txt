@@ -1,38 +1,34 @@
-############
-sudo su
-# Пусть не будет заставки при загрузке
-nano /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT=""
-update-grub
-############
-# Конфигурирование локали и клавиатуры
-echo 'FRAMEBUFFER=Y' >> /etc/initramfs-tools/initramfs.conf
-update-initramfs -u
-dpkg-reconfigure {locales,console-setup,keyboard-configuration}
-############
-# Подкачка и память
-# Что за подкачка после установщика
-swapon --show
-# Выключаем
-swapoff /swapfile
-# Делаем побольше. Вместо /swapfile имя файла полный путь
-fallocate -l 8G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-ls -lh /swapfile
-swapon /swapfile
-swapon --show
-# Память
-apt install -y preload
-nano /etc/sysctl.conf
-# Добавить в конец файла
-vm.swappiness=10
-vm.vfs_cache_pressure=50
-############
-Ограничение эскизов
-sudo nsno /etc/xdg/tumbler/tumbler.rc
-############
-exit
+# Создание пользователя sudo  
+sudo adduser user  
+sudo usermod -aG sudo user  
+# Проверка  
+su - user  
+sudo ls -la /root  
+exit  
+exit  
+ssh user@192.168.0.8  
+# Если все ОК, удалить пароль пользователя ubuntu  
+sudo apt update  
+sudo su  
+killall -u ubuntu  
+userdel -r ubuntu  
+exit  
+# Конфигурирование локали  
+# Подкачка  
+# Что за подкачка после установщика  
+swapon --show  
+# Если есть, то выключаем, если нет, то ниже на один пункт  
+sudo swapoff /swapfile
+sudo rm /swapfile
+# Вместо /swapfile имя файла полный путь  
+# Делаем  
+sudo fallocate -l 2G /var/swapfile && sudo chmod 600 /var/swapfile && sudo mkswap /var/swapfile  
+ls -lh /var/swapfile  
+sudo swapon /var/swapfile  
+swapon --show  
+# Изменения в fstab
+sudo nano /etc/fstab
+
 # ssh
 sudo apt install -y ssh
 # Создание ключа ssh на хосте
