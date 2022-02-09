@@ -18,7 +18,7 @@ sudo nano /etc/transmission-daemon/settings.json
     "watch-dir-enabled": true
 ########
 # Правило для ufw
-sudo nano /etc/ufw/applications.d/transmission-demon
+sudo nano /etc/ufw/applications.d/transmission-daemon
 ########
 [Transmission]
 title=Cross-platform BitTorrent client 
