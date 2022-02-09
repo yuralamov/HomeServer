@@ -13,7 +13,7 @@ sudo mysqladmin -p -u user version
 sudo nano /etc/ufw/applications.d/mysql  
 #########
 [MySQL]
-title=Cross-platform MySQL Server 
+title=Cross-platform MySQL Server
 description=Very fast, multithreaded, multi-user, and robust SQL database server
 ports=3306/tcp
 #########
