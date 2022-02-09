@@ -17,8 +17,13 @@ title=Cross-platform MySQL Server
 description=Very fast, multithreaded, multi-user, and robust SQL database server
 ports=3306/tcp
 #########
-sudo ufw allow MySQL && sudo ufw reload && sudo ufw status verbose
-#########
+sudo ufw allow MySQL && sudo ufw reload && sudo ufw status verbose  
+# Для удаленного подключения  
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf  
+# Закомментировать
+# bind-address          = 127.0.0.1
+# mysqlx-bind-address   = 127.0.0.1
+sudo systemctl start mysql && sudo systemctl status mysql
 # Если Вам нужно изменить расположение баз данных, то 
 # Узнать где располагаются
 mysql -u user -p
