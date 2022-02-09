@@ -13,8 +13,18 @@ sudo su
 killall -u ubuntu  
 userdel -r ubuntu  
 exit  
+sudo reboot  
+# Смена фамилии хоста  
+sudo su  
+hostnamectl set-hostname server  
+# Может надо, а может так сойдет  
+sed -i 's/preserve_hostname: false/preserve_hostname: true/' /etc/cloud/cloud.cfg
+exit  
+sudo reboot  
+# Установка часового пояса  
+sudo timedatectl set-timezone Europe/Moscow  
 # Конфигурирование локали  
-# Подкачка  
+sudo dpkg-reconfigure {locales,console-setup}  
 # Что за подкачка после установщика  
 swapon --show  
 # Если есть, то выключаем, если нет, то ниже на один пункт  
@@ -25,60 +35,34 @@ sudo fallocate -l 2G /var/swapfile && sudo chmod 600 /var/swapfile && sudo mkswa
 ls -lh /var/swapfile  
 sudo swapon /var/swapfile  
 swapon --show  
-# Изменения в fstab
-sudo nano /etc/fstab
-
-# ssh
-sudo apt install -y ssh
-# Создание ключа ssh на хосте
-$ ssh-keygen -t rsa -b 4096 -C "user@hotmail.com"
-# Здесь адрес почты - подтвержденная почта на github, если нет, то и не надо
-# Запуск агента ssh и импортирование ключа
-$ eval $(ssh-agent -s)
-$ ssh-add /home/user/.ssh/id_rsa
-# Копирование публичного ключа на сервер
-$ ssh-copy-id user@192.168.0.8
-# Подключение к новоиспеченному серверу по ssh
-$ ssh user@192.168.0.8
-# Если не задавали контрольную фразу, то произойдет вход
-# При первом входе подтвердить отпечаток
-# Если уже был сгенерирован ключ к этому хосту, то удалить старый
-$ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"
+# Изменения в fstab  
+sudo nano /etc/fstab  
+# Обязательно после строки монтирования /var  
+/var/swapfile none swap sw 0 0  
+sudo reboot  
+sudo apt update && sudo apt full-upgrade -y && sudo reboot  
+# ssh  
+sudo apt install -y ssh  
+################ Это все на хосте  
+# Создание ключа ssh на хосте  
+ssh-keygen -t rsa -b 4096 -C "user@hotmail.com"  
+# Здесь адрес почты - подтвержденная почта на github, если нет, то и не надо  
+# Запуск агента ssh и импортирование ключа  
+eval $(ssh-agent -s)  
+ssh-add /home/user/.ssh/id_rsa  
+# Копирование публичного ключа на сервер  
+ssh-copy-id user@192.168.0.8  
+# Если уже был сгенерирован ключ к этому хосту, то удалить старый  
+$ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"  
 # windows openssh  
 ssh-keygen -R 192.168.0.8  
-#############
-# Брандмауэр
-sudo apt install -y ufw fail2ban && sudo ufw status verbose
-sudo ufw app list
-sudo ufw allow OpenSSH
-sudo ufw logging medium
-sudo ufw enable && sudo ufw reload && sudo ufw status verbose
-#############
-# Системные звуки xubuntu
-# https://stone-guest.livejournal.com/
-sudo apt install -y ubuntu-sounds dconf-editor sox gnome-session-canberra libcanberra-gtk0 libcanberra-gtk-module  libcanberra-gtk3-0 libcanberra-gtk3-module libcanberra-pulse
-# Настройки Внешний вид -> Настройки -> Звуки событий; Терминал xfce -> Дополнительно -> Звуковое оповещение; Редактор настроек -> xsettings -> /Net/SoundThemeName -> ubuntu; Редактор dconf -> org -> gnome -> desktop -> sound -> input-feedback-sounds и theme-name (ubuntu)
-sudo nano /etc/X11/Xsession.d/52libcanberra-gtk3-module_add-to-gtk-modules
-# This file is sourced by Xsession(5), not executed.
-
-if [ -z "$GTK_MODULES" ] ; then
-   GTK_MODULES="canberra-gtk3-module"
-else
-   GTK_MODULES="$GTK_MODULES:canberra-gtk3-module"
-fi
-export GTK_MODULES
-#
-sudo nano /etc/X11/Xsession.d/52libcanberra-gtk-module_add-to-gtk-modules
-# This file is sourced by Xsession(5), not executed.
-
-if [ -z "$GTK_MODULES" ] ; then
-   GTK_MODULES="canberra-gtk-module"
-else
-   GTK_MODULES="$GTK_MODULES:canberra-gtk-module"
-fi
-export GTK_MODULES
-
-#
-В автозагрузку 
-/usr/bin/canberra-gtk-play -i desktop-login
-######
+#############  
+# Подключение к новоиспеченному серверу по ssh  
+ssh user@192.168.0.8  
+# ufw  
+sudo apt install -y ufw fail2ban && sudo ufw status verbose && sudo ufw app list  
+sudo ufw allow OpenSSH && sudo ufw logging medium  
+sudo ufw enable && sudo ufw reload && sudo ufw status verbose  
+# Нужные прожки  
+sudo apt install -y preload apt-transport-https ca-certificates curl wget unzip unrar mc lynx gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip git  
+sudo reboot
