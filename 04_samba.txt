@@ -1,9 +1,7 @@
 ==============================
 # Samba
 sudo apt install samba
-sudo mkdir -p /srv/shared/
-sudo chown -R nobody:nogroup /srv/shared/
-sudo chmod -R 0777 /srv/shared/
+sudo mkdir -p /srv/shared/ && sudo chown -R nobody:nogroup /srv/shared/ && sudo chmod -R 0777 /srv/shared/
 # Небольшие подготовительные дайствия
 sudo nano /etc/security/limits.conf
 ########
