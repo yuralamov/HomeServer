@@ -1,5 +1,5 @@
 =====================================
-# Установка Медиасервера Gerbera
+# Медиасервер Gerbera
 sudo add-apt-repository ppa:stephenczetty/gerbera-updates -y
 sudo apt-get update && sudo apt install gerbera ffmpeg ffmpegthumbnailer x264 x265 -y
 # Конфигурирование
