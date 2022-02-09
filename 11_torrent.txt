@@ -1,8 +1,7 @@
-# Установка transmission-daemon
-sudo apt update && sudo apt install transmission-daemon -y
+# transmission-daemon
+sudo apt install transmission-daemon -y
 # Остановим сервис
 sudo systemctl stop transmission-daemon && sudo systemctl status transmission-daemon
-# Подготовка файловой системы
 sudo mkdir -p /srv/transmission/{downloads,incomplete}
 sudo chmod -R 0775 /srv/transmission/{downloads,incomplete}
 sudo chown -R debian-transmission:debian-transmission /srv/transmission/{downloads,incomplete}
@@ -29,8 +28,6 @@ description=Transmission is an open source, volunteer-based project
 ports=9091/tcp
 ########
 sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
-# Стартуем
 sudo systemctl start transmission-daemon && sudo systemctl status transmission-daemon
-===================================
 # Смотрим на
 http://192.168.0.8:9091
