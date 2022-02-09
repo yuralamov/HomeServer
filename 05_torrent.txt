@@ -2,7 +2,7 @@
 sudo apt install transmission-daemon -y
 # Остановим сервис
 sudo systemctl stop transmission-daemon && sudo systemctl status transmission-daemon
-sudo mkdir -p /srv/transmission/{downloads,incomplete} && sudo chmod -R 0775 /srv/transmission/{downloads,incomplete} && sudo chown -R debian-transmission:debian-transmission /srv/transmission/{downloads,incomplete}
+sudo mkdir -p /srv/transmission/{downloads,incomplete} && sudo chmod -R 0775 /srv/transmission/ && sudo chown -R debian-transmission:debian-transmission /srv/transmission/
 # Конфигурация демона
 sudo nano /etc/transmission-daemon/settings.json
 ########
