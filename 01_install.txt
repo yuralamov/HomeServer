@@ -64,5 +64,5 @@ sudo apt install -y ufw fail2ban && sudo ufw status verbose && sudo ufw app list
 sudo ufw allow OpenSSH && sudo ufw logging medium  
 sudo ufw enable && sudo ufw reload && sudo ufw status verbose  
 # Нужные прожки  
-sudo apt install -y preload apt-transport-https ca-certificates curl wget unzip unrar mc lynx gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip git  
+sudo apt install -y preload apt-transport-https ca-certificates curl wget unzip unrar mc lynx smartmontools gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip git  
 sudo reboot
