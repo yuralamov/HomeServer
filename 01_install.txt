@@ -18,8 +18,7 @@ exit
 # Что за подкачка после установщика  
 swapon --show  
 # Если есть, то выключаем, если нет, то ниже на один пункт  
-sudo swapoff /swapfile
-sudo rm /swapfile
+sudo swapoff /swapfile && sudo rm /swapfile
 # Вместо /swapfile имя файла полный путь  
 # Делаем  
 sudo fallocate -l 2G /var/swapfile && sudo chmod 600 /var/swapfile && sudo mkswap /var/swapfile  
