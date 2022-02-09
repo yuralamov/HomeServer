@@ -23,7 +23,9 @@ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 # Закомментировать
 # bind-address          = 127.0.0.1
 # mysqlx-bind-address   = 127.0.0.1
-sudo systemctl start mysql && sudo systemctl status mysql
+sudo systemctl restart mysql && sudo systemctl status mysql  
+exit
+mysqladmin -h 192.168.0.8 -u user -p version
 # Если Вам нужно изменить расположение баз данных, то 
 # Узнать где располагаются
 mysql -u user -p
