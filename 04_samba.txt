@@ -10,7 +10,7 @@ root            -       nofile          16384
 ########
 ulimit -n 16384
 # Создаем новый конфиг samba
-$ sudo nano /etc/samba/smb.conf
+sudo nano /etc/samba/smb.conf
 #########
 .......
 [Shared]
@@ -25,5 +25,4 @@ $ sudo nano /etc/samba/smb.conf
 ########
 testparm
 sudo systemctl restart smbd.service && sudo systemctl status smbd.service
-sudo ufw allow Samba
-sudo ufw reload && sudo ufw status verbose
+sudo ufw allow Samba && sudo ufw reload && sudo ufw status verbose
