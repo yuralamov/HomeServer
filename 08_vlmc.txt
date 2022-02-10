@@ -7,7 +7,7 @@ sudo cp etc/* /etc
 sudo chown root:root /etc/{vlmcsd.ini,vlmcsd.kmd}
 sudo chmod 644 /etc/{vlmcsd.ini,vlmcsd.kmd}
 sudo chown root:root /usr/bin/{vlmcsd,vlmcs}
-sudo chmod 755 /etc/{vlmcsd,vlmcs}
+sudo chmod 755 /usr/bin/{vlmcsd,vlmcs}
 sudo touch /etc/systemd/system/kms-script.service
 sudo chmod 664 /etc/systemd/system/kms-script.service
 # Сделаем сервис
