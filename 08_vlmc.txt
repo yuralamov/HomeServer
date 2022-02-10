@@ -1,0 +1,34 @@
+# vlmcsd
+cd ~ && mkdir src && cd src
+git clone https://github.com/Wind4/vlmcsd.git && cd vlmcsd
+make
+sudo cp bin/* /usr/bin/
+sudo cp etc/* /etc
+sudo chown root:root /etc/{vlmcsd.ini,vlmcsd.kmd}
+sudo chmod 644 /etc/{vlmcsd.ini,vlmcsd.kmd}
+sudo chown root:root /usr/bin/{vlmcsd,vlmcs}
+sudo chmod 755 /etc/{vlmcsd,vlmcs}
+sudo touch /etc/systemd/system/kms-script.service
+sudo chmod 664 /etc/systemd/system/kms-script.service
+# Сделаем сервис
+sudo nano /etc/systemd/system/kms-script.service
+########
+[Unit]
+Description=Microsoft KMS Server
+After=network.target
+After=network-online.target
+Wants=network-online.target
+ 
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/vlmcsd -i /etc/vlmcsd.ini -j /etc/vlmcsd.kmd -l /var/log/vlmcsd.log
+RemainAfterExit=yes
+LimitNOFILE=65536
+ 
+[Install]
+WantedBy=multi-user.target
+#########
+sudo systemctl daemon-reload
+sudo systemctl enable kms-script.service
+sudo systemctl startstatus kms-script.service
+sudo systemctl status kms-script.service
