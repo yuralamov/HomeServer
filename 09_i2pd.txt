@@ -11,7 +11,10 @@ sudo nano /etc/i2pd/i2pd.conf
 # Меняем 127.0.0.1 на интерфейс сервера 192.168.0.8
 sudo systemctl restart i2pd.service
 #####################
-# На клиенте ставим
-# https://github.com/PurpleI2P/i2pdbrowser
-# Запуск для настройки firefox ~какаяплатформа~/build/build(.cmd)
-# В сетевых настройках firefox укажем свой сервер 192.168.0.8
+# На клиенте
+mkdir -p ~/opt && cd ~/opt
+git clone https://github.com/PurpleI2P/i2pdbrowser.git && cd ~/opt/i2pdbrowser/linux/
+./build/build
+./firefox-portable
+# Заходим Preferences -> Network Settings -> Settings
+# Меняем 127.0.0.1 на 192.168.0.8
