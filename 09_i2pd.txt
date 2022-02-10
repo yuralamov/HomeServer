@@ -9,6 +9,7 @@ sudo ufw allow 4444
 sudo ufw allow 4447
 # На сервере в файле его настроек /etc/i2pd/i2pd.conf
 # Меняем 127.0.0.1 на интерфейс сервера 192.168.0.8
+sudo systemctl restart i2pd.service
 #####################
 # На клиенте ставим
 # https://github.com/PurpleI2P/i2pdbrowser
