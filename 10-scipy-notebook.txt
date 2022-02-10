@@ -1,0 +1,6 @@
+# scipy-notebook docker
+docker pull jupyter/scipy-notebook:latest
+docker volume create scipy-notebook
+docker run -d -p 8888:8888 --name scipy-notebook -h scipy-notebook -v jwork:/home/jovyan/work/ jupyter/scipy-notebook
+# Смотрим в http://192.168.0.8:8888, установить пароль входа
+# В логах porteiner на этот контейнер скопировать код, установить пароль входа
