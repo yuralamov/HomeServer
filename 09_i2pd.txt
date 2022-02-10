@@ -18,3 +18,4 @@ git clone https://github.com/PurpleI2P/i2pdbrowser.git && cd ~/opt/i2pdbrowser/l
 ./firefox-portable
 # Заходим Preferences -> Network Settings -> Settings
 # Меняем 127.0.0.1 на 192.168.0.8
+# Контроль http://192.168.0.8:7070
