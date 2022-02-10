@@ -1,22 +1,16 @@
-# Установка i2pd роутера
+# i2pd роутер
 sudo apt update && sudo add-apt-repository ppa:purplei2p/i2pd
 sudo apt update && sudo apt upgrade -y && sudo apt install i2pd
 sudo systemctl enable i2pd.service
-# enable|disable|start|stop|status
 # Правила для ufw
 #################
-# отключил ufw
-# https://geti2p.net/ru/docs/ports
-#################
-#https://github.com/PurpleI2P
-#################
+sudo ufw allow 7070
+sudo ufw allow 4444
+sudo ufw allow 4447
 # На сервере в файле его настроек /etc/i2pd/i2pd.conf
-# Меняем 127.0.0.1 на интерфейс сервера
+# Меняем 127.0.0.1 на интерфейс сервера 192.168.0.8
 #####################
 # На клиенте ставим
 # https://github.com/PurpleI2P/i2pdbrowser
 # Запуск для настройки firefox ~какаяплатформа~/build/build(.cmd)
-# В настройках Firefox\Data\profile\prefs.js укажем свой сервер
-# user_pref("network.proxy.socks", "192.168.0.8");
-# user_pref("network.proxy.no_proxies_on", "192.168.0.8, localhost, 127.0.0.1");
-# Запускаем FirefoxPortable.exe в папке firefox
+# В сетевых настройках firefox укажем свой сервер 192.168.0.8
