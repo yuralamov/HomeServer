@@ -13,8 +13,9 @@ sudo update-initramfs -u
 
 ##MDADM
 # https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04
-sudo mdadm --create --verbose /dev/md127 --chunk=64 --level=0 --raid-devices=2 /dev/sd{b,c}
-sudo mkfs.ext4 -b 4096 -E stride=16,stripe-width=32 /dev/md127
+sudo apt install -y mdadm
+sudo mdadm --create --verbose /dev/md127 --chunk=128 --level=0 --raid-devices=2 /dev/sd{b,c}
+sudo mkfs.ext4 -b 4096 -E stride=32,stripe-width=64 /dev/md127
 sudo mount /dev/md127 /srv
 df -h -x devtmpfs -x tmpfs
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
@@ -22,8 +23,8 @@ sudo update-initramfs -u
 echo '/dev/md127 /srv ext4 defaults,nofail,discard 0 0' | sudo tee -a /etc/fstab
 
 ##LVM
-https://losst.ru/sozdanie-i-nastrojka-lvm-linux
-https://www.dmosk.ru/instruktions.php?object=lvm
+# https://losst.ru/sozdanie-i-nastrojka-lvm-linux
+# https://www.dmosk.ru/instruktions.php?object=lvm
 sudo apt install lvm2
 sudo pvcreate /dev/sdb /dev/sdc
 sudo pvscan
@@ -35,5 +36,5 @@ sudo vgdisplay
 sudo lvcreate -i2 -I64 -L120G -n lv_w22 vg01
 sudo lvdisplay 
 
-Обратиться к устройствам
+# Обратиться к устройствам
 /dev/vg01/lv_w22 или /dev/dm-0 или /dev/mapper/vg01-lv_w22
