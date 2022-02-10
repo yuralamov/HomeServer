@@ -1,18 +1,13 @@
-#########
-# Настройка железа
+Настройка железа
 #########
 # Если используется ноутбук, то не лишним будет следующая настройка
 # Игнорировать закрытие крышки в ноутбуке
-$ sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
-
-#########
-# Погасить экран (через минутку, чтоб не маячил)
+sudo sed -i 's/#HandleLidSwitch=suspend/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
+Погасить экран (через минутку, чтоб не маячил)
 sudo nano /etc/rc.local
 
-#!/bin/sh -e
-#
+# !/bin/sh -e
 # rc.local
-#
 # This script is executed at the end of each multiuser runlevel.
 # Make sure that the script will «exit 0» on success or any other
 # value on error.
@@ -23,15 +18,12 @@ sudo nano /etc/rc.local
 # By default this script does nothing.
 setterm --blank 1
 exit 0
-
-#########
-$ sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
-$ sudo systemctl restart rc-local
-#########
-
+#
+sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
+sudo systemctl restart rc-local
 sudo apt install fancontrol smartmontools lm-sensors
 
-#########
-# Если ubuntu server на Hyper-V
+########
+# Если ubuntu server на Hyper-V, проверка запущенного ассистента
 lsmod | grep hv_utils
 ps -ef | grep hv
