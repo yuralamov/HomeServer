@@ -1,0 +1,35 @@
+# Настройка менеджера виртуальных машин
+sudo apt install cpu-checker
+kvm-ok
+# Установка KVM-QEMU
+sudo apt-get install qemu-kvm libvirt-daemon-system virtinst libosinfo-bin cpu-checker libguestfs-tools bridge-utils
+sudo usermod -aG libvirt $(whoami)
+sudo usermod -aG kvm $(whoami)
+
+sudo systemctl enable libvirtd && sudo systemctl start libvirtd && sudo systemctl status libvirtd
+# Настройка сети, т.е. добавляем мост на действующий интерфейс.
+sudo nano /etc/netplan/00-installer-config.yaml
+
+network:
+  ethernets:
+    enp3s0:
+      dhcp4: true
+      dhcp6: true
+  bridges:
+    br0:
+      interfaces: [enp3s0]
+      dhcp4: true
+      dhcp6: true
+  version: 2
+*****************************/
+sudo netplan generate 
+sudo netplan --debug apply
+brctl show
+networkctl
+networkctl status br0
+ip a | grep " br0:" -A 3
+ip route
+arp -n
+
+# На машине-клиенте ставим Менеджер виртуальных машин и подключаем его к северу
+sudo apt install virt-manager
