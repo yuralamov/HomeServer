@@ -56,6 +56,9 @@ ssh-copy-id user@192.168.0.8
 $ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"  
 # windows openssh  
 ssh-keygen -R 192.168.0.8  
+# Отключить вход по паролю
+sudo nano /etc/ssh/sshd_config
+# раскомментировать PasswordAuthentication no
 #############  
 # Подключение к новоиспеченному серверу по ssh  
 ssh user@192.168.0.8  
