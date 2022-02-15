@@ -11,12 +11,12 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 http://192.168.0.8:9000
 ########
 # Перенос папки с образами
-docker info
+sudo docker info
 sudo systemctl stop docker && sudo systemctl status docker
 sudo nano /etc/docker/daemon.json
 {
     "data-root": "/srv/docker"
 }
 sudo mv /var/lib/docker /srv/
-ln -s /srv/docker /var/lib/
+sudo ln -s /srv/docker /var/lib/
 sudo systemctl start docker && sudo systemctl status docker
