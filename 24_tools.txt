@@ -10,5 +10,11 @@ Disabled=false
 Priority=2
 Locations=
 MaxFileSize=0
+# GStreamer plugin
+[GstThumbnailer]
+Disabled=false
+Priority=1
+Locations=
+MaxFileSize=0
 ....
 
