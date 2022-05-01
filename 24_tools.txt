@@ -18,3 +18,5 @@ Locations=
 MaxFileSize=0
 ....
 
+# Выпадающий терминал
+xfce4-terminal --drop-down
