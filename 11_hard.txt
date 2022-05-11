@@ -23,6 +23,8 @@ sudo chown root:root /etc/rc.local && sudo chmod 755 /etc/rc.local
 sudo systemctl restart rc-local
 sudo apt install fancontrol smartmontools lm-sensors
 
+sudo apt install ubuntu-sounds dconf-editor sox gnome-session-canberra libcanberra-gtk0 libcanberra-gtk-module libcanberra-gtk3-0 libcanberra-gtk3-module libcanberra-pulse
+
 ########
 # Если ubuntu server на Hyper-V, проверка запущенного ассистента
 lsmod | grep hv_utils
