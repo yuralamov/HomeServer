@@ -28,6 +28,14 @@ LimitNOFILE=65536
 [Install]
 WantedBy=multi-user.target
 #########
+sudo nano /etc/ufw/applications.d/kms-script
+#########
+[KMS-Script]
+title=KMS-Script Service 
+description=KMS-Script Service
+ports=1688/tcp
+########
+sudo ufw allow KMS-Script && sudo ufw reload && sudo ufw status
 sudo systemctl daemon-reload
 sudo systemctl enable kms-script.service
 sudo systemctl start kms-script.service
