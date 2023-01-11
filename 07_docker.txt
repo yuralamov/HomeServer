@@ -12,7 +12,7 @@ sudo apt update && sudo apt upgrade -y
 # Отличие Docker-Desktop заключается в том, что Desktop перехватывает управление и все свои дела ведет на территории гыука
 # Вся работа идентична и там и там. Может возникнуть путаница где какие образы и контейнеры крутятся.
 # Docker-Desktop не видит системные, а система не видит Docker-Desktop контейнеры.
-# То есть при запущеном Docker-Desktop Вы управляете своими контейнерами, а если нет (или при запушеном Docker-Desktop от sudo) - то системными.
+# То есть при запущеном Docker-Desktop Вы управляете своими контейнерами, а если нет (или при запушеном Docker-Desktop выполните команду от sudo) - то системными.
 
 # Далее для Docker-Desktop устанавливаем
 # https://desktop.docker.com/linux/main/amd64/docker-desktop-4.15.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64
