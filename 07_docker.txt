@@ -1,28 +1,29 @@
 # docker
-# https://docs.docker.com/desktop/install/ubuntu/
+# 
 # https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository
-sudo apt update && sudo apt upgrade -y && sudo apt install ca-certificates curl gnupg lsb-release
+sudo apt update && sudo apt-get update && sudo apt-get install ca-certificates curl gnupg lsb-release
+
 sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt update && sudo apt upgrade -y
-
-# Отличие Docker-Desktop заключается в том, что Desktop перехватывает управление и все свои дела ведет на территории гыука
-# Вся работа идентична и там и там. Может возникнуть путаница где какие образы и контейнеры крутятся.
-# Docker-Desktop не видит системные, а система не видит Docker-Desktop контейнеры.
-# То есть при запущеном Docker-Desktop Вы управляете своими контейнерами, а если нет (или при запушеном Docker-Desktop выполните команду от sudo) - то системными.
-
-# Далее для Docker-Desktop устанавливаем (11.01.2023)
-# https://desktop.docker.com/linux/main/amd64/docker-desktop-4.15.0-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64
-ls
-sudo apt-get install ./docker-desktop-<version>-<arch>.deb
-# Запуск или ярлык Docker-Desktop или systemctl --user start docker-desktop
-# Локация $HOME/.docker/
-
-# Для системы ставим
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo usermod -aG docker $(whoami)
-sudo reboot
+sudo usermod -aG docker $USER
+
+# Перенос папки с образами куда хотим
+sudo docker info
+sudo systemctl stop docker && sudo systemctl status docker
+sudo nano /etc/docker/daemon.json
+#######
+{
+    "data-root": "/srv/docker"
+}
+#######
+sudo mv /var/lib/docker /srv/
+sudo ln -s /srv/docker /var/lib/
+sudo systemctl start docker && sudo systemctl status docker
+
+# Выход-вход
+exit
 
 # Для управления есть web-ка (которую можно юзать и при Docker-Desktop,запущеном без морды: systemctl --user start docker-desktop):
 # https://docs.portainer.io/start/install/server/docker/linux
@@ -32,13 +33,3 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /va
 # Управляется по вебке
 http://урла.сервера:9443
 
-# Перенос папки с образами куда хотим
-sudo docker info
-sudo systemctl stop docker && sudo systemctl status docker
-sudo nano /etc/docker/daemon.json
-{
-    "data-root": "/srv/docker"
-}
-sudo mv /var/lib/docker /srv/
-sudo ln -s /srv/docker /var/lib/
-sudo systemctl start docker && sudo systemctl status docker
