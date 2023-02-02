@@ -9,36 +9,8 @@ exit
 ssh user@192.168.0.8  
 # Если все ОК, удалить пароль пользователя ubuntu  
 sudo apt update  
-sudo su  
-killall -u ubuntu  
-userdel -r ubuntu  
-exit  
-sudo reboot  
-# Смена фамилии хоста  
-sudo su  
-hostnamectl set-hostname server  
-# Может надо, а может так сойдет  
-sed -i 's/preserve_hostname: false/preserve_hostname: true/' /etc/cloud/cloud.cfg
-exit  
-sudo reboot  
-# Установка часового пояса  
-sudo timedatectl set-timezone Europe/Moscow  
 # Конфигурирование локали  
 sudo dpkg-reconfigure {locales,console-setup}  
-# Что за подкачка после установщика  
-swapon --show  
-# Если есть, то выключаем, если нет, то ниже на один пункт  
-sudo swapoff /swapfile && sudo rm /swapfile
-# Вместо /swapfile имя файла полный путь  
-# Делаем  
-sudo fallocate -l 2G /var/swapfile && sudo chmod 600 /var/swapfile && sudo mkswap /var/swapfile  
-ls -lh /var/swapfile  
-sudo swapon /var/swapfile  
-swapon --show  
-# Изменения в fstab  
-sudo nano /etc/fstab  
-# Обязательно после строки монтирования /var  
-/var/swapfile none swap sw 0 0  
 sudo reboot  
 sudo apt update && sudo apt full-upgrade -y && sudo reboot  
 # ssh  
@@ -52,7 +24,8 @@ eval $(ssh-agent -s)
 ssh-add /home/user/.ssh/id_rsa  
 # Копирование публичного ключа на сервер  
 ssh-copy-id user@192.168.0.8
-# Windows PS
+# Windows PS мануал здесь
+# https://learn.microsoft.com/ru-ru/windows-server/administration/openssh/openssh_keymanagement
 Get-Service ssh-agent | Set-Service -StartupType Manual
 Start-Service ssh-agent
 Get-Service ssh-agent
@@ -70,7 +43,9 @@ ssh user@192.168.0.8
 # ufw  
 sudo apt install -y ufw fail2ban && sudo ufw status verbose && sudo ufw app list  
 sudo ufw allow OpenSSH && sudo ufw logging medium  
-sudo ufw enable && sudo ufw reload && sudo ufw status verbose  
+sudo ufw reload && sudo ufw status verbose  
+# Включить ufw, если очень хочется
+sudo ufw enable
 # Нужные прожки  
-sudo apt install -y preload apt-transport-https ca-certificates curl wget unzip unrar htop iftop nmon speedtest-cli lm-sensors mc lynx smartmontools gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip git net-tools 
+sudo apt install -y preload apt-transport-https ca-certificates curl wget git unzip unrar cabextract alien htop iftop nmon bashtop speedtest-cli mc lynx smartmontools gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip net-tools 
 sudo reboot
