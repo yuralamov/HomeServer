@@ -1,5 +1,5 @@
 # docker
-# 
+# Смотрите на docker hub на соответствие контейнеров архитектуре процессора arm64
 # https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository
 sudo apt update && sudo apt-get update && sudo apt-get install ca-certificates curl gnupg lsb-release
 
