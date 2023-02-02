@@ -13,7 +13,8 @@ sudo nano /etc/transmission-daemon/settings.json
     "rpc-username": "transmission",
     "rpc-whitelist": "127.0.0.1,192.168.0.*",
     "rpc-whitelist-enabled": true,
-Добавим после запятой
+# Если кинуть в папку файл для торрента, то он подхватится без управления по вебке
+# Добавим в самом конце после запятой
     "watch-dir": "/srv/shared",
     "watch-dir-enabled": true
 ########
@@ -23,7 +24,7 @@ sudo nano /etc/ufw/applications.d/transmission-daemon
 [Transmission]
 title=Cross-platform BitTorrent client 
 description=Transmission is an open source, volunteer-based project
-ports=9091/tcp
+ports=9091
 ########
 sudo ufw allow Transmission && sudo ufw reload && sudo ufw status
 sudo systemctl start transmission-daemon && sudo systemctl status transmission-daemon
