@@ -1,17 +1,10 @@
 # vlmcsd
-cd ~ && mkdir src && cd src
+cd ~ && mkdir -p src && cd src
 git clone https://github.com/Wind4/vlmcsd.git && cd vlmcsd
 make
-sudo cp bin/* /usr/bin/
-sudo cp etc/* /etc
-sudo chown root:root /etc/{vlmcsd.ini,vlmcsd.kmd}
-sudo chmod 644 /etc/{vlmcsd.ini,vlmcsd.kmd}
-sudo chown root:root /usr/bin/{vlmcsd,vlmcs}
-sudo chmod 755 /usr/bin/{vlmcsd,vlmcs}
-sudo touch /etc/systemd/system/kms-script.service
-sudo chmod 664 /etc/systemd/system/kms-script.service
-# Сделаем сервис
-sudo nano /etc/systemd/system/kms-script.service
+sudo cp bin/* /usr/bin/ && sudo cp etc/* /etc && sudo chown root:root /etc/{vlmcsd.ini,vlmcsd.kmd}
+sudo chmod 644 /etc/{vlmcsd.ini,vlmcsd.kmd} && sudo chown root:root /usr/bin/{vlmcsd,vlmcs} && sudo chmod 755 /usr/bin/{vlmcsd,vlmcs}
+sudo touch /etc/systemd/system/kms-script.service && sudo chmod 664 /etc/systemd/system/kms-script.service && sudo nano /etc/systemd/system/kms-script.service
 ########
 [Unit]
 Description=Microsoft KMS Server
@@ -33,10 +26,7 @@ sudo nano /etc/ufw/applications.d/kms-script
 [KMS-Script]
 title=KMS-Script Service 
 description=KMS-Script Service
-ports=1688/tcp
+ports=1688
 ########
 sudo ufw allow KMS-Script && sudo ufw reload && sudo ufw status
-sudo systemctl daemon-reload
-sudo systemctl enable kms-script.service
-sudo systemctl start kms-script.service
-sudo systemctl status kms-script.service
+sudo systemctl daemon-reload && sudo systemctl enable kms-script.service && sudo systemctl start kms-script.service && sudo systemctl status kms-script.service
