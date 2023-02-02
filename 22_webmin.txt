@@ -8,7 +8,7 @@ sudo nano /etc/ufw/applications.d/webmin
 [WebMIN]  
 title=Web-based interface for system administration for Unix  
 description=Using any modern web browser, you can setup user accounts, Apache, DNS, file sharing and much more  
-ports=10000/tcp  
+ports=10000 
 ########  
 sudo ufw allow WebMIN && sudo ufw reload && sudo ufw status verbose  
 # Подключение https://192.168.0.8:10000
