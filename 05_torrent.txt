@@ -14,7 +14,7 @@ sudo nano /etc/transmission-daemon/settings.json
     "rpc-whitelist": "127.0.0.1,192.168.0.*",
     "rpc-whitelist-enabled": true,
 # Если кинуть в папку файл для торрента, то он подхватится без управления по вебке
-# Добавим в самом конце после запятой
+# Добавим в самом конце ПОСЛЕ ЗАПЯТОЙ
     "watch-dir": "/srv/shared",
     "watch-dir-enabled": true
 ########
