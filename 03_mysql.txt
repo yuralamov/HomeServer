@@ -1,6 +1,5 @@
 # Установка по умолчанию MySQL  
 sudo apt install mysql-server -y  
-sudo mysql_secure_installation  
 # Создать пользователя с большими привилегиями  
 sudo mysql  
 CREATE USER 'user' IDENTIFIED BY 'User@123';  
@@ -8,14 +7,14 @@ GRANT ALL PRIVILEGES ON *.* TO 'user' WITH GRANT OPTION;
 QUIT  
 # Проверка системы и версии  
 systemctl status mysql.service  
-sudo mysqladmin -p -u user version  
+mysqladmin -p -u user version  
 # Создадим правило для ufw  
 sudo nano /etc/ufw/applications.d/mysql  
 #########
 [MySQL]
 title=Cross-platform MySQL Server
 description=Very fast, multithreaded, multi-user, and robust SQL database server
-ports=3306/tcp
+ports=3306
 #########
 sudo ufw allow MySQL && sudo ufw reload && sudo ufw status verbose  
 # Для удаленного подключения  
@@ -43,7 +42,7 @@ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 # Настроить алиасы
 sudo nano /etc/apparmor.d/tunables/alias
 ##
-alias /var/lib/mysql/ -> /home/mysql/
+alias /var/lib/mysql/ -> /srv/mysql/
 ##
 # Перезапуск службы apparmor
 sudo systemctl restart apparmor
