@@ -4,7 +4,7 @@ curl -fsSL https://gerbera.jfrog.io/artifactory/api/gpg/key/public | sudo apt-ke
 sudo apt-add-repository https://gerbera.jfrog.io/artifactory/debian
 # Здесь маленькое отступление
 # https://losst.pro/kak-ispravit-key-is-stored-in-legacy-trusted-gpg-keyring-v-ubuntu?ysclid=lccbhjalte83589859
-sudo apt-key export E846576A | sudo gpg --dearmour -o /etc/apt/keyrings/mysql.gpg
+sudo apt-key export E846576A | sudo gpg --dearmour -o /etc/apt/keyrings/gerbera.gpg
 # Подредактируем
 sudo nano /etc/apt/sources.list.d/archive_uri-https_gerbera_jfrog_io_artifactory_debian-jammy.list
 #####
