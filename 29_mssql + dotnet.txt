@@ -1,4 +1,4 @@
-# Установка сервера ms sql 2019
+# Установка сервера ms sql 2019 не на малинке
 $ sudo apt-get install apt-transport-https
 $ wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 $ sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/mssql-server-2019.list)"
