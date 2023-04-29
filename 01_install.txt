@@ -51,11 +51,10 @@ sudo apt install -y preload apt-transport-https ca-certificates curl wget git un
 sudo reboot
 # Отключение встроенных беспроводных устройств
 sudo nano /etc/modprobe.d/raspi-blacklist.conf
-
+# http://connect.majordomohome.com/profile/2711/blog/kak-otklyuchit-razmazannyy-bt-i-wi-fi-na-raspberry-pi.html
 # Отключение BT
 blacklist btbcm
 blacklist hci_uart
-
 # Отключение WI-FI
 blacklist brcmfmac
 blacklist brcmutil
