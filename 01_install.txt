@@ -49,3 +49,13 @@ sudo ufw enable
 # Нужные прожки  
 sudo apt install -y preload apt-transport-https ca-certificates curl wget git unzip unrar cabextract alien htop iftop nmon bashtop speedtest-cli mc lynx smartmontools gcc gdb default-jdk default-jre build-essential gnupg-agent software-properties-common make python3 python3-pip net-tools 
 sudo reboot
+# Отключение встроенных беспроводных устройств
+sudo nano /etc/modprobe.d/raspi-blacklist.conf
+
+# Отключение BT
+blacklist btbcm
+blacklist hci_uart
+
+# Отключение WI-FI
+blacklist brcmfmac
+blacklist brcmutil
