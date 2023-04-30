@@ -30,6 +30,9 @@ Get-Service ssh-agent | Set-Service -StartupType Manual
 Start-Service ssh-agent
 Get-Service ssh-agent
 ssh-add C:\Users\user\.ssh\id_ed25519
+# Копируем ключ
+ssh user@192.168.0.8 mkdir -p /home/user/.ssh/
+scp C:\Users\user\.ssh\id_ed25519.pub user@192.168.0.8:/home/user/.ssh/authorized_keys
 # Если уже был сгенерирован ключ к этому хосту, то удалить старый  
 $ ssh-keygen -f "/home/user/.ssh/known_hosts" -R "192.168.0.8"  
 # windows openssh  
