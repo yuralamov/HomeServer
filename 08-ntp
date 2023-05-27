@@ -88,7 +88,9 @@ PollIntervalMaxSec=2048
 date
 
 sudo timedatectl set-timezone Europe/Moscow
-sudo systemctl restart timedatectl
+sudo systemctl status systemd-timesyncd.service
+sudo systemctl restart systemd-timesyncd.service
+sudo timedatectl status|timesync-status|show-timesync|--all
 
 Клиент Windows
 w32tm /config /manualpeerlist:"192.168.0.10,0x8" /syncfromflags:manual /update
