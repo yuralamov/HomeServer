@@ -1,0 +1,94 @@
+sudo apt install ntp
+sudo systemctl enable ntp && sudo systemctl start ntp && sudo systemctl status ntp
+sudo ufw allow ntp
+
+sudo nano /etc/ntp.conf
+/*
+driftfile /var/lib/ntp/ntp.drift
+leapfile /usr/share/zoneinfo/leap-seconds.list
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+pool 0.ubuntu.pool.ntp.org iburst
+pool 1.ubuntu.pool.ntp.org iburst
+pool 2.ubuntu.pool.ntp.org iburst
+pool 3.ubuntu.pool.ntp.org iburst
+server 127.127.1.0
+pool ntp.ubuntu.com
+
+restrict -4 default kod notrap nomodify nopeer noquery limited
+restrict -6 default kod notrap nomodify nopeer noquery limited
+restrict 127.0.0.1
+restrict ::1
+restrict source notrap nomodify noquery
+
+broadcast 192.168.0.255
+
+logfile /var/log/ntp.log
+*/
+
+iburst — отправлять несколько пакетов (повышает точность);
+0.ubuntu.pool.ntp.org — адреса серверов, с которыми наш сервер будет сверять время;
+server — выполнение синхронизации с сервером, а не пулом серверов;
+prefer — предпочитаемый сервер
+server 127.127.1.0 — в случае отказа сети Интернет брать время из своих системных часов.
+
+Безопасность
+restrict default — задает значение по умолчанию для всех рестриктов.
+kod — узлам, которые часто отправляют запросы сначала отправить поцелуй смерти (kiss of death), затем отключить от сервера.
+notrap — не принимать управляющие команды.
+nomodify — запрещает команды, которые могут вносить изменения состояния.
+nopeer — не синхронизироваться с хостом.
+noquery — не принимать запросы.
+restrict 192.168.0.0 mask 255.255.255.0 — разрешить синхронизацию для узлов в сети 192.168.0.0/24.
+IP адреса 127.0.0.1 и ::1 позволяют обмен данные серверу с самим собой.
+
+IPv4 и IPv6:
+restrict -4 default kod notrap nomodify nopeer noquery
+restrict -6 default kod notrap nomodify nopeer noquery
+
+Перезапуск:
+
+sudo systemctl restart ntp
+
+Брандмауэр
+ufw:
+ufw allow ntp
+
+Тест
+ntpq -p
+
+remote — адрес сервера времени, с которым синхронизируется наш сервер;
+refid — вышестоящий сервер (с которым сервер из графы выше получает время);
+st — уровень сервера (stratum);
+t — пир (unicast или multicast);
+when — когда последний раз сверялось время;
+poll — периодичность синхронизации с этим сервером;
+reach — состояние работоспособности. Если удалось произвести синхронизации восемь раз в подряд становится равным 377;
+delay — время задержки;
+offset — разница между нашим временем и временем на сервере; положительное — наши часы спешат, отрицательное — отстают;
+jitter — смещение времени на удаленном сервере;
+* — с этим сервером синхронизирует время наш ntpd;
++ — сервер можно использовать для сверки часов;
+- — не рекомендован для синхронизации;
+x — не доступен.
+
+Клиент linux
+sudo nano /etc/systemd/timesyncd.conf
+
+[Time]
+NTP=192.168.0.8
+FallbackNTP=192.168.0.8
+#ntp.ubuntu.com
+RootDistanceMaxSec=5
+PollIntervalMinSec=32
+PollIntervalMaxSec=2048
+
+date
+
+sudo timedatectl set-timezone Europe/Moscow
+sudo systemctl restart timedatectl
+
+Клиент Windows
+w32tm /config /manualpeerlist:"192.168.0.10,0x8" /syncfromflags:manual /update
