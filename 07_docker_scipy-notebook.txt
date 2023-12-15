@@ -9,6 +9,10 @@ jupyter/tensorflow-notebook includes popular Python deep learning libraries.
   Everything in jupyter/scipy-notebook and its ancestor images
     tensorflow machine learning library
 
+jupyter/pytorch-notebook includes popular Python deep learning libraries.
+  Everything in jupyter/scipy-notebook and its ancestor images
+    pytorch machine learning library
+
 jupyter/datascience-notebook includes libraries for data analysis from the Python, R, and Julia communities.
   Everything in the jupyter/scipy-notebook, jupyter/r-notebook, and jupyter/julia-notebook images and their ancestor images
     rpy2 package
