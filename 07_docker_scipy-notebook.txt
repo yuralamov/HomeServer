@@ -1,30 +1,30 @@
 # scipy-notebook docker
-docker pull jupyter/scipy-notebook:latest
+docker pull quay.io/jupyter/scipy-notebook:latest
 docker volume create scipy-notebook
 docker run -d -p 8010:8888 --name scipy-notebook -h scipy-notebook -v scipy-notebook:/home/jovyan/work/ quay.io/jupyter/scipy-notebook
 # Смотрим в http://192.168.0.8:8010
 # В логах porteiner на этот контейнер скопировать токен, установить пароль входа
 
-jupyter/tensorflow-notebook includes popular Python deep learning libraries.
+quay.io/jupyter/tensorflow-notebook includes popular Python deep learning libraries.
   Everything in jupyter/scipy-notebook and its ancestor images
     tensorflow machine learning library
 
-jupyter/pytorch-notebook includes popular Python deep learning libraries.
+quay.io/jupyter/pytorch-notebook includes popular Python deep learning libraries.
   Everything in jupyter/scipy-notebook and its ancestor images
     pytorch machine learning library
 
-jupyter/datascience-notebook includes libraries for data analysis from the Python, R, and Julia communities.
+quay.io/jupyter/datascience-notebook includes libraries for data analysis from the Python, R, and Julia communities.
   Everything in the jupyter/scipy-notebook, jupyter/r-notebook, and jupyter/julia-notebook images and their ancestor images
     rpy2 package
 
-jupyter/pyspark-notebook includes Python support for Apache Spark.
+quay.io/jupyter/pyspark-notebook includes Python support for Apache Spark.
   Everything in jupyter/scipy-notebook and its ancestor images
     Apache Spark with Hadoop binaries
     grpcio-status
     grpcio
     pyarrow
 
-jupyter/all-spark-notebook includes Python and R support for Apache Spark.
+quay.io/jupyter/all-spark-notebook includes Python and R support for Apache Spark.
   Everything in jupyter/pyspark-notebook and its ancestor images
     IRKernel to support R code in Jupyter notebooks
     rcurl, sparklyr, ggplot2 packages
