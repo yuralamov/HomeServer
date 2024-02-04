@@ -14,7 +14,7 @@ sudo nano /etc/samba/smb.conf
 #########
 .......
 [Shared]
-	create mask = 0777
+	create mask = 0666
 	directory mask = 0777
 	force user = nobody
 	guest ok = Yes
