@@ -12,27 +12,11 @@ NH_SERVER_ADDR = 192.168.0.4
 NH_USE_BROADCAST = Disabled
 =============
 sudo apt-get install libenchant1c2a
-sudo ./setup-full-8.3.22.1709-x86_64.run --mode unattended --enable-components server
-sudo systemctl link /opt/1cv8/x86_64/8.3.22.1709/srv1cv8-8.3.22.1709@.service
-sudo systemctl start srv1cv8-8.3.22.1709@default.service && sudo systemctl status srv1cv8-8.3.22.1709@default.service && sudo systemctl enable srv1cv8-8.3.22.1709@default.service
-sudo apt update && sudo apt purge gnome-shell gnome-control-center gnome-keyring gdm3 -y && sudo apt autoremove -y && sudo apt upgrade -y && sudo reboot
+sudo ./setup-full-8.3.23.2040-x86_64.run
+sudo systemctl link /opt/1cv8/x86_64/8.3.23.2040/srv1cv8-8.3.23.2040@.service
+sudo systemctl link /opt/1cv8/x86_64/8.3.23.2040/ras-8.3.23.2040.service
+sudo systemctl start srv1cv8-8.3.23.2040@default.service && sudo systemctl status srv1cv8-8.3.23.2040@default.service && sudo systemctl enable srv1cv8-8.3.23.2040@default.service
+sudo systemctl start ras-8.3.23.2040.service && sudo systemctl status ras-8.3.23.2040.service && sudo systemctl enable ras-8.3.23.2040.service
 ==============
-# Демон удаленного администрирования
-# sudo nano /etc/systemd/system/rassrv1cv8.service
-[Unit]
-Description=1C:Enterprise Remote Administration Service
-After=network.target remote-fs.target nss-lookup.target
-Requires=srv1cv8-8.3.22.1709@default.service
-
-[Service]
-Type=simple
-ExecStart=/opt/1cv8/x86_64/8.3.22.1709/ras cluster --port=1545
-KillSignal=SIGINT
-PrivateTmp=true
-Restart=on-failure
-RestartSec=5
- 
-[Install]
-WantedBy=multi-user.target
-==============
-sudo systemctl daemon-reload && sudo systemctl enable rassrv1cv8.service && sudo systemctl start rassrv1cv8.service && sudo systemctl status rassrv1cv8.service
+sudo systemctl daemon-reload && sudo systemctl status srv1cv8-8.3.23.2040@default.service
+sudo systemctl status srv1cv8-8.3.23.2040@default.service
