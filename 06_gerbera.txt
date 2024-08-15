@@ -2,16 +2,6 @@
 # Медиасервер Gerbera
 wget -O - https://pkg.gerbera.io/public.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/gerbera-keyring.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/gerbera-keyring.gpg] https://pkg.gerbera.io/debian/ $(lsb_release -c --short) main" | sudo tee /etc/apt/sources.list.d/gerbera.list >/dev/null
-# Здесь маленькое отступление
-# https://losst.pro/kak-ispravit-key-is-stored-in-legacy-trusted-gpg-keyring-v-ubuntu?ysclid=lccbhjalte83589859
-sudo apt-key export E846576A | sudo gpg --dearmour -o /etc/apt/keyrings/gerbera.gpg
-# Подредактируем
-sudo nano /etc/apt/sources.list.d/gerbera.list
-#####
-deb [signed-by=/etc/apt/keyrings/gerbera.gpg] https://gerbera.jfrog.io/artifactory/debian jammy main
-# deb-src [signed-by=/etc/apt/keyrings/gerbera.gpg] https://gerbera.jfrog.io/artifactory/debian jammy main
-#####
-sudo apt-key del E846576A
 sudo apt update && sudo apt upgrade
 sudo apt install gerbera ffmpeg ffmpegthumbnailer x264 x265 -y
 # Конфигурирование
