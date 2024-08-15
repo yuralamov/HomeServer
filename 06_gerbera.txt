@@ -1,12 +1,12 @@
 =====================================
 # Медиасервер Gerbera
-curl -fsSL https://gerbera.jfrog.io/artifactory/api/gpg/key/public | sudo apt-key add -
-sudo apt-add-repository https://gerbera.jfrog.io/artifactory/debian
+wget -O - https://pkg.gerbera.io/public.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/gerbera-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/gerbera-keyring.gpg] https://pkg.gerbera.io/debian/ $(lsb_release -c --short) main" | sudo tee /etc/apt/sources.list.d/gerbera.list >/dev/null
 # Здесь маленькое отступление
 # https://losst.pro/kak-ispravit-key-is-stored-in-legacy-trusted-gpg-keyring-v-ubuntu?ysclid=lccbhjalte83589859
 sudo apt-key export E846576A | sudo gpg --dearmour -o /etc/apt/keyrings/gerbera.gpg
 # Подредактируем
-sudo nano /etc/apt/sources.list.d/archive_uri-https_gerbera_jfrog_io_artifactory_debian-jammy.list
+sudo nano /etc/apt/sources.list.d/gerbera.list
 #####
 deb [signed-by=/etc/apt/keyrings/gerbera.gpg] https://gerbera.jfrog.io/artifactory/debian jammy main
 # deb-src [signed-by=/etc/apt/keyrings/gerbera.gpg] https://gerbera.jfrog.io/artifactory/debian jammy main
