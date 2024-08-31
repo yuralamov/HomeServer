@@ -43,6 +43,11 @@ cscript ospp.vbs /setprt:1688
 cscript ospp.vbs /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
 cscript ospp.vbs /act
 #########
+Windows Server 2022
+Windows Server 2022 Standard	VDYBN-27WPP-V4HQT-9VMD4-VMK7H
+Windows Server 2022 Datacenter	WX4NM-KYWYW-QJJR4-XV3QB-6VM33
+Windows Server 2022 Datacenter: Azure Edition	NTBV8-9K7Q8-V27C6-M2BTV-KHMXV
+-----------------------
 Windows Server 2019
 Windows Server 2019 Datacenter 	WMDGN-G9PQG-XVVXX-R3X43-63DFG
 Windows Server 2019 Standard 	N69G4-B89J2-4G8F4-WWYCC-J464C
