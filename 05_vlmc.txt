@@ -222,3 +222,21 @@ PowerPoint 2010							RC8FX-88JRY-3PF7C-X8P67-P4VTT
 Publisher 2010							BFK7F-9MYHM-V68C7-DRQ66-83YTP
 SharePoint Workspace 2010					QYYW6-QP4CB-MBV6G-HYMCJ-4T3J4
 Word 2010								HVHB3-C6FV7-KQX9W-YQG79-CRY7T
+
+###########
+Windows 2022 Eval - Standart
+оставшийся срок действия ознакомительной версии
+Slmgr /dli
+Evaluation можно легально продлить 5 раз на 180 дней
+slmgr /rearm
+текущая редакция
+DISM /online /Get-CurrentEdition
+список возможных редакций Windows
+DISM /online /Get-TargetEditions
+Установленная версия Windows Server
+Get-ComputerInfo | select OsName, WindowsEditionId
+апгрейд Eval редакции до Standard
+dism /online /set-edition:ServerStandard /productkey:VDYBN-27WPP-V4HQT-9VMD4-VMK7H /accepteula
+Активация
+slmgr /skms 192.168.1.80:1688
+slmgr /ato
