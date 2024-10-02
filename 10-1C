@@ -11,12 +11,11 @@ NH_TCPIP = Enabled
 NH_SERVER_ADDR = 192.168.0.4
 NH_USE_BROADCAST = Disabled
 =============
-sudo apt-get install libenchant1c2a
-sudo ./setup-full-8.3.23.2040-x86_64.run
-sudo systemctl link /opt/1cv8/x86_64/8.3.23.2040/srv1cv8-8.3.23.2040@.service
-sudo systemctl link /opt/1cv8/x86_64/8.3.23.2040/ras-8.3.23.2040.service
-sudo systemctl start srv1cv8-8.3.23.2040@default.service && sudo systemctl status srv1cv8-8.3.23.2040@default.service && sudo systemctl enable srv1cv8-8.3.23.2040@default.service
-sudo systemctl start ras-8.3.23.2040.service && sudo systemctl status ras-8.3.23.2040.service && sudo systemctl enable ras-8.3.23.2040.service
+sudo ./sudo ./setup-full-8.3.25.1374-x86_64.run
+sudo systemctl link /opt/1cv8/x86_64/8.3.25.1374/srv1cv8-8.3.25.1374@.service
+sudo systemctl link /opt/1cv8/x86_64/8.3.25.1374/ras-8.3.25.1374.service
+sudo systemctl start srv1cv8-8.3.25.1374@default.service && sudo systemctl status srv1cv8-8.3.25.1374@default.service && sudo systemctl enable srv1cv8-8.3.25.1374@default.service
+sudo systemctl start ras-8.3.25.1374.service && sudo systemctl status ras-8.3.25.1374.service && sudo systemctl enable ras-8.3.25.1374.service
 ==============
-sudo systemctl daemon-reload && sudo systemctl status srv1cv8-8.3.23.2040@default.service
-sudo systemctl status ras-8.3.23.2040.service
+sudo systemctl daemon-reload && sudo systemctl status srv1cv8-8.3.25.1374@default.service
+sudo systemctl status ras-8.3.25.1374.service
