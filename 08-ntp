@@ -93,4 +93,5 @@ sudo systemctl restart systemd-timesyncd.service
 sudo timedatectl status|timesync-status|show-timesync|--all
 
 Клиент Windows
+timedate.cpl  
 w32tm /config /manualpeerlist:"192.168.0.10,0x8" /syncfromflags:manual /update
